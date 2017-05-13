@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- 一个层叠效果,通过阴影表现出立体效果 -->
+    <!--shadow-->
+    <item
+        android:left="2dp"
+        android:top="2dp">
+        <shape>
+            <solid android:color="#535151" />
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+    <!--White block-->
+    <item
+        android:bottom="2dp"
+        android:right="2dp">
+        <shape>
+            <solid android:color="#ffffff" />
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+
+</layer-list>
