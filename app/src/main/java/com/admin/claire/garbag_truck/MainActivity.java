@@ -1,5 +1,6 @@
 package com.admin.claire.garbag_truck;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mGarbageImg;
     private ImageView mLocationImg;
     private ImageView mNoteImg;
-    private ImageView mAlarmImg;
+    private ImageView mInfoImg;
 
     private static String weatherUrl = "https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20%3D%2055812231%20and%20u%3D%22c%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
     private String TAG = "weatherJSON";
@@ -46,18 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private String code;
     private String temp;
     private String text;
-
+    private ArrayList<String> data = new ArrayList<>();
     private ArrayAdapter<String> adapter;
-    private static final String[]data = {
-            "週日、三：停收垃圾及資源回收物(廚餘)",
-            "週一、五：平面類：\n" +
-                    "紙類\n" +
-                    "舊衣類\n" +
-                    "乾淨塑膠袋",
-            "週二、四、六：立體類︰\n" +
-                    "乾淨保麗龍\n" +
-                    "一般類（瓶罐、容器、小家電等）"
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,17 +68,58 @@ public class MainActivity extends AppCompatActivity {
         mListNote = (ListView)findViewById(R.id.listNote);
         mGarbageImg = (ImageView)findViewById(R.id.imageTruck);
         mLocationImg = (ImageView)findViewById(R.id.imageLocation);
-        mAlarmImg = (ImageView)findViewById(R.id.imageAlarm);
+        mInfoImg = (ImageView)findViewById(R.id.imageInfo);
         mNoteImg = (ImageView)findViewById(R.id.imageNote);
         // 註冊監聽物件
         mGarbageImg.setOnClickListener(mGarbageImgListener);
         mLocationImg.setOnClickListener(mLocationImgListener);
         mNoteImg.setOnClickListener(mNoteImgListener);
+        mInfoImg.setOnClickListener(mInfoImgListener);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 如果被啟動的Activity元件,傳回確定的結果
+        if (resultCode == Activity.RESULT_OK) {
+            //讀取標題
+            String titleText = data.getStringExtra("titleText");
+
+            // 如果是新增記事
+            if (requestCode == 0){
+                //加入標題項目
+                this.data.add(titleText);
+                // 通知資料已經改變，ListView元件才會重新顯示
+                adapter.notifyDataSetChanged();
+            }
+            // 如果是修改記事
+            else if (requestCode == 1){
+                // 讀取記事編號
+                int position = data.getIntExtra("position", -1);
+
+                if (position != -1) {
+                    // 設定標題項目
+                    this.data.set(position, titleText);
+                    // 通知資料已經改變，ListView元件才會重新顯示
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+
+        }
 
     }
 
     private void initListView() {
-
+        // 加入範例資料
+        data.add("週日、三：\n 停收垃圾及資源回收物(廚餘)");
+        data.add("週一、五：\n平面類：" +
+                "紙類\n" +
+                "舊衣類\n" +
+                "乾淨塑膠袋");
+        data.add("週二、四、六：\n立體類︰ " +
+                "乾淨保麗龍\n" +
+                "一般類（瓶罐、容器、小家電等）");
          adapter = new ArrayAdapter<String>(this, R.layout.list_item_templates,
                  R.id.text_Note, data);
 
@@ -101,8 +134,15 @@ public class MainActivity extends AppCompatActivity {
             // 第四個參數在這裡沒有用途
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, data[position],
-                        Toast.LENGTH_SHORT).show();
+                // 使用Action名稱建立啟動另一個Activity元件需要的Intent物件
+                Intent intent = new Intent("com.admin.claire.garbag_truck.EDIT_ITEM");
+
+                // 設定記事編號與標題
+                intent.putExtra("position", position);
+                intent.putExtra("titleText", data.get(position));
+
+                // 呼叫「startActivityForResult」，第二個參數「1」表示執行修改
+                startActivityForResult(intent, 1);
             }
         };
         // 註冊選單項目點擊監聽物件
@@ -114,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
-                Toast.makeText(MainActivity.this, "Long:" + data[position],
+                Toast.makeText(MainActivity.this, "Long:" + data.get(position),
                         Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -133,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+   //定位所有明細
     private View.OnClickListener mLocationImgListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -141,11 +182,26 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    //新增記事
     private View.OnClickListener mNoteImgListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
-            startActivity(new Intent(MainActivity.this, NotesActivity.class));
+
+            // 使用Action名稱建立啟動另一個Activity元件需要的Intent物件
+            Intent intent = new Intent("com.admin.claire.garbag_truck.ADD_ITEM");
+            // 呼叫「startActivityForResult」，，第二個參數「0」表示執行新增
+            startActivityForResult(intent, 0);
+        }
+    };
+
+    private View.OnClickListener mInfoImgListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
+            startActivity(new Intent(MainActivity.this, InfoActivity.class));
+
         }
     };
 

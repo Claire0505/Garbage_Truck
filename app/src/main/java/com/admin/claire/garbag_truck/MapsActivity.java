@@ -4,6 +4,7 @@ package com.admin.claire.garbag_truck;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.annotation.NonNull;
@@ -30,16 +31,20 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.Delayed;
 
 // 使用Google API用戶端，讓地圖元件類別實作需要的介面， GoogleApiClient
@@ -164,7 +169,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .position(new LatLng(o.getDouble("lat"), o.getDouble("lng")))
                         .title(o.getString("title"))
                         .snippet(o.getString("content"))
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.transport1))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.signs))
                 );
 
             }
@@ -231,13 +236,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // 設定目前位置的標記
         if (currentMarker == null) {
             currentMarker = mMap.addMarker(new MarkerOptions().position(latLng));
+
 //            //印出我的座標-經度緯度
-//            Log.e("TAG", "我的座標 - 經度 : "
+//           Log.e("TAG", "我的座標 - 經度 : "
 //                    + location.getLongitude() + "  , 緯度 : " + location.getLatitude() );
+//
+//            PolylineOptions polylineOpt = new PolylineOptions()
+//                    .width(15)
+//                    .color(Color.BLUE);
+//            ArrayList<LatLng> listLatLng = new ArrayList<LatLng>();
+//            listLatLng.add(new LatLng(location.getLatitude(), location.getLongitude()));
+//            listLatLng.add(new LatLng(25.072434, 121.619185));
+//            polylineOpt.addAll(listLatLng);
+//            Polyline polylineRoute = mMap.addPolyline(polylineOpt);
+//            polylineRoute.setVisible(true);
         }
         else {
             currentMarker.setPosition(latLng);
         }
+
         // 移動地圖到目前的位置
         moveMap(latLng);
     }

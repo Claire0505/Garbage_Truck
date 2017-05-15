@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- 自訂 Activity Dialog 樣示 -->
+    <style name="Dialog" parent="@style/Theme.AppCompat.Dialog" >
+
+        <item name="android:windowBackground">@drawable/background</item>
+    </style>
+
 </resources>

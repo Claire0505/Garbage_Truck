@@ -6,20 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#97d3d7"
+    android:background="@drawable/background"
     tools:context="com.admin.claire.garbag_truck.Garbagetruck_List_Activity">
 
     <TextView
         android:id="@+id/title_Text"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:textColor="#2581cc"
+        android:textColor="#154974"
         android:textSize="16sp"
         android:text="" />
 
     <TextView
         android:id="@+id/content_Text"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
@@ -28,12 +32,16 @@
 
     <TextView
         android:id="@+id/lng_Text"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="" />
 
     <TextView
         android:id="@+id/lat_Text"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="" />

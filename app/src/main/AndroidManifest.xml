@@ -48,12 +48,35 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <!-- 所有垃圾資料地圖元件 -->
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
-        <activity android:name=".Garbagetruck_List_Activity" />
-        <activity android:name=".NotesActivity"></activity>
+
+        <!-- 垃圾車明細元件 -->
+        <activity
+            android:name=".Garbagetruck_List_Activity"
+            android:screenOrientation="portrait" />
+
+        <!-- 記事項目元件 -->
+        <activity
+            android:name=".NotesActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <!-- 新增用的名稱 -->
+                <action android:name="com.admin.claire.garbag_truck.ADD_ITEM"/>
+                <!-- 修改用的名稱 -->
+                <action android:name="com.admin.claire.garbag_truck.EDIT_ITEM"/>
+                <!-- 一定要加入，內容固定不變 -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+
+        <activity android:name=".InfoActivity"
+            android:theme="@style/Dialog"/>
     </application>
 
 </manifest>

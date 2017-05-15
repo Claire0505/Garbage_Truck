@@ -25,12 +25,12 @@
             android:id="@+id/icon_img"
             android:layout_width="56dp"
             android:layout_height="48dp"
-            app:srcCompat="@drawable/transport1"
+            app:srcCompat="@drawable/transport"
             android:contentDescription="@string/app_name"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
@@ -48,7 +48,7 @@
                 android:paddingRight="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no_internet" />
+                android:text="" />
         </LinearLayout>
 
 
@@ -56,14 +56,16 @@
 
     <ListView
         android:id="@+id/listNote"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:layout_below="@id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layoutImg"/>
 
 
     <LinearLayout
+        android:id="@+id/layoutImg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -99,13 +101,15 @@
             android:contentDescription="@string/app_name"/>
 
         <ImageView
-            android:id="@+id/imageAlarm"
+            android:id="@+id/imageInfo"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_margin="4dp"
             android:background="@drawable/circle_button"
-            android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/ic_alarm_on_black_36dp" />
+            app:srcCompat="@drawable/ic_info_black_36dp"
+            android:contentDescription="@string/app_name"/>
+
+
 
     </LinearLayout>
 

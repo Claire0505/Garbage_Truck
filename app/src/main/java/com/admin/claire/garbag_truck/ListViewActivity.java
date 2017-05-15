@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -127,8 +128,9 @@ public class ListViewActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
 
@@ -146,7 +148,7 @@ public class ListViewActivity extends AppCompatActivity {
         searchView.setFocusable(false);
         searchView.requestFocusFromTouch();      //要點選後才會開啟鍵盤輸入
         searchView.setSubmitButtonEnabled(false);//輸入框後是否要加上送出的按鈕
-        searchView.setQueryHint("輸入區名: 內湖區...."); //輸入框沒有值時要顯示的提示文字
+        searchView.setQueryHint("輸入行政區查詢: 內湖區...."); //輸入框沒有值時要顯示的提示文字
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -158,8 +160,9 @@ public class ListViewActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 //過濾列表資料
-                adapter.getFilter().filter("垃圾清運點：臺北市"+ newText);
+                adapter.getFilter().filter("垃圾清運點：臺北市" + newText);
 
                 return true;
             }
@@ -167,6 +170,7 @@ public class ListViewActivity extends AppCompatActivity {
 
         return true;
     }
+
     private AdapterView.OnItemClickListener onClickListView = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -192,6 +196,5 @@ public class ListViewActivity extends AppCompatActivity {
 //                   + "個\n內容:" + title , Toast.LENGTH_SHORT).show();
         }
     };
-
 
 }

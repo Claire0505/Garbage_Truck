@@ -9,4 +9,25 @@
     <string name="lat">緯度 :</string>
     <string name="title_activity_maps">Map</string>
     <string name="no_internet">網路尚未連線</string>
+    <string name="garbage_area">垃圾清運點</string>
+    <string name="title">標題</string>
+    <string name="content">內容</string>
+    <string name="btn_ok">確認</string>
+    <string name="btn_cancel">取消</string>
+
+    <string-array name="area">
+        <item>中正區</item>
+        <item>大同區</item>
+        <item>中山區</item>
+        <item>松山區</item>
+        <item>大安區</item>
+        <item>萬華區</item>
+        <item>信義區</item>
+        <item>士林區</item>
+        <item>北投區</item>
+        <item>內湖區</item>
+        <item>南港區</item>
+        <item>文山區</item>
+    </string-array>
+
 </resources>
