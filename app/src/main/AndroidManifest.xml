@@ -79,9 +79,19 @@
             android:name=".InfoActivity"
             android:theme="@style/Dialog" />
 
-        <!-- 顏色項目元件 使用Dialog 方式呈現-->
+        <!-- 選擇顏色項目元件 使用Dialog 方式呈現-->
         <activity android:name=".ColorActivity"
-            android:theme="@style/DialogColor"/>
+            android:theme="@style/DialogColor">
+            <!-- 加入設定元件啟動用的Action名稱 mypreference.xml，也加入啟動選擇顏色元件的設定-->
+            <intent-filter>
+                <action android:name="com.admin.claire.garbag_truck.CHOOSE_COLOR"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+        <!-- 設定元件 Preference -->
+        <activity android:name=".preference.PrefActivity" />
     </application>
 
 </manifest>

@@ -2,6 +2,8 @@ package com.admin.claire.garbag_truck;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -122,6 +124,12 @@ public class NotesActivity extends AppCompatActivity {
                     // 新增記事
                     else {
                         notesItem.setDatetime(new Date().getTime());
+                        // 建立SharedPreferences物件
+                        SharedPreferences sharedPreferences =
+                                PreferenceManager.getDefaultSharedPreferences(NotesActivity.this);
+                        // 讀取設定的預設顏色
+                        int color = sharedPreferences.getInt("DEFAULT_COLOR", -1);
+                        notesItem.setColor(getColors(color));
                     }
 
                     // 取得回傳資料用的Intent物件
@@ -145,7 +153,7 @@ public class NotesActivity extends AppCompatActivity {
     }
 
 
-    private Colors getColors(int color) {
+    public static Colors getColors(int color) {
         Colors result = Colors.BLUE;
 
         if (color == Colors.LIGHTGRAY.parseColor()) {

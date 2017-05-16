@@ -24,6 +24,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.admin.claire.garbag_truck.preference.PrefActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -401,6 +402,7 @@ public class MainActivity extends AppCompatActivity {
         // 使用參數取得使用者選擇的選單項目元件編號
         int itemId = item.getItemId();
         switch (itemId){
+
             // 取消所有已勾選的項目
             case R.id.revert_item:
                 for (int i = 0; i < notesItemAdapter.getCount(); i++) {
@@ -453,5 +455,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    // 設定
+    public void clickPreferences(MenuItem item) {
+        // 啟動設定元件
+        startActivity(new Intent(this, PrefActivity.class));
     }
 }

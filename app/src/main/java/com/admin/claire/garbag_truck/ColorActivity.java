@@ -2,6 +2,8 @@ package com.admin.claire.garbag_truck;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,10 +46,27 @@ public class ColorActivity extends AppCompatActivity {
     private class ColorListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            Intent result = getIntent();
-            result.putExtra("colorId", v.getId());
-            setResult(Activity.RESULT_OK, result);
-            finish();
+            String action = ColorActivity.this.getIntent().getAction();
+            // 經由設定元件啟動
+            if (action != null && action.equals("com.admin.claire.garbag_truck.CHOOSE_COLOR")) {
+                // 建立SharedPreferences物件
+                SharedPreferences.Editor editor =
+                        PreferenceManager.getDefaultSharedPreferences(
+                                ColorActivity.this).edit();
+
+                // 儲存預設顏色
+                editor.putInt("DEFAULT_COLOR", v.getId());
+                // 寫入設定值
+                editor.commit();
+                finish();
+            }
+            // 經由新增或修改記事的元件啟動
+            else {
+                Intent result = getIntent();
+                result.putExtra("colorId", v.getId());
+                setResult(Activity.RESULT_OK, result);
+                finish();
+            }
 
         }
     }
