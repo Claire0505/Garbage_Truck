@@ -64,19 +64,24 @@
             android:name=".NotesActivity"
             android:screenOrientation="portrait">
             <intent-filter>
+
                 <!-- 新增用的名稱 -->
-                <action android:name="com.admin.claire.garbag_truck.ADD_ITEM"/>
+                <action android:name="com.admin.claire.garbag_truck.ADD_ITEM" />
                 <!-- 修改用的名稱 -->
-                <action android:name="com.admin.claire.garbag_truck.EDIT_ITEM"/>
+                <action android:name="com.admin.claire.garbag_truck.EDIT_ITEM" />
                 <!-- 一定要加入，內容固定不變 -->
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
 
+        <!-- Info項目元件 使用Dialog方式呈現 -->
+        <activity
+            android:name=".InfoActivity"
+            android:theme="@style/Dialog" />
 
-        <activity android:name=".InfoActivity"
-            android:theme="@style/Dialog"/>
+        <!-- 顏色項目元件 使用Dialog 方式呈現-->
+        <activity android:name=".ColorActivity"
+            android:theme="@style/DialogColor"/>
     </application>
 
 </manifest>

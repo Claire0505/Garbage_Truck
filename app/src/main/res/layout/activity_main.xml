@@ -31,6 +31,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -75,40 +76,39 @@
 
         <ImageView
             android:id="@+id/imageTruck"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="4dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
             android:background="@drawable/circle_button"
             app:srcCompat="@drawable/transport"
             android:contentDescription="@string/app_name"/>
 
         <ImageView
             android:id="@+id/imageLocation"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="4dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
             android:background="@drawable/circle_button"
             app:srcCompat="@drawable/ic_location_on_black_36dp"
             android:contentDescription="@string/app_name"/>
 
         <ImageView
             android:id="@+id/imageNote"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="4dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
             android:background="@drawable/circle_button"
             app:srcCompat="@drawable/notes"
             android:contentDescription="@string/app_name"/>
 
         <ImageView
             android:id="@+id/imageInfo"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="4dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
             android:background="@drawable/circle_button"
             app:srcCompat="@drawable/ic_info_black_36dp"
             android:contentDescription="@string/app_name"/>
-
 
 
     </LinearLayout>

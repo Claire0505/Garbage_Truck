@@ -2,11 +2,16 @@ package com.admin.claire.garbag_truck;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -30,6 +35,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,8 +55,15 @@ public class MainActivity extends AppCompatActivity {
     private String code;
     private String temp;
     private String text;
-    private ArrayList<String> data = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
+
+    // ListView使用的自定Adapter物件
+    private NotesItemAdapter notesItemAdapter;
+    // 儲存所有記事本的List物件
+    private List<NotesItem> notesItems;
+    // 選單項目物件
+    private MenuItem revert_item, delete_item;
+    // 已選擇項目數量
+    private int selectedCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         getData();
         initView();
-        initListView();
+        initListViewHandler();
     }
 
     private void initView() {
@@ -80,28 +94,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         // 如果被啟動的Activity元件,傳回確定的結果
         if (resultCode == Activity.RESULT_OK) {
-            //讀取標題
-            String titleText = data.getStringExtra("titleText");
+            // 讀取記事物件
+            NotesItem notesItem = (NotesItem)data.getExtras().
+                    getSerializable("com.admin.claire.garbag_truck.ITEM");
 
             // 如果是新增記事
             if (requestCode == 0){
-                //加入標題項目
-                this.data.add(titleText);
-                // 通知資料已經改變，ListView元件才會重新顯示
-                adapter.notifyDataSetChanged();
+                // 設定記事物件的編號與日期時間
+                notesItem.setId(notesItems.size() + 1);
+                notesItem.setDatetime(new Date().getTime());
+
+                // 加入新增的記事物件
+                notesItems.add(notesItem);
+
+                // 通知資料已經改變，ListView元件才會重新顯示(ListView使用的自定Adapter物件)
+                notesItemAdapter.notifyDataSetChanged();
             }
-            // 如果是修改記事
+             //如果是修改記事
             else if (requestCode == 1){
                 // 讀取記事編號
                 int position = data.getIntExtra("position", -1);
 
                 if (position != -1) {
-                    // 設定標題項目
-                    this.data.set(position, titleText);
+                    // 設定修改的記事物件
+                    notesItems.set(position, notesItem);
+
                     // 通知資料已經改變，ListView元件才會重新顯示
-                    adapter.notifyDataSetChanged();
+                    notesItemAdapter.notifyDataSetChanged();
                 }
 
             }
@@ -110,20 +132,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initListView() {
+    private void initListViewHandler() {
         // 加入範例資料
-        data.add("週日、三：\n 停收垃圾及資源回收物(廚餘)");
-        data.add("週一、五：\n平面類：" +
-                "紙類\n" +
-                "舊衣類\n" +
-                "乾淨塑膠袋");
-        data.add("週二、四、六：\n立體類︰ " +
-                "乾淨保麗龍\n" +
-                "一般類（瓶罐、容器、小家電等）");
-         adapter = new ArrayAdapter<String>(this, R.layout.list_item_templates,
-                 R.id.text_Note, data);
+        notesItems = new ArrayList<NotesItem>();
 
-        mListNote.setAdapter(adapter);
+        notesItems.add(new NotesItem(1, new Date().getTime(), Colors.RED,
+                "週日、三：\n 停收垃圾及資源回收物(廚餘)",
+                "停收垃圾及資源回收物(廚餘)"," ", 0 ));
+
+        notesItems.add(new NotesItem(2, new Date().getTime(), Colors.GREEN,
+                "週一、五：\n平面類：紙類,舊衣類,乾淨塑膠袋",
+                "平面類：\n紙類,舊衣類,乾淨塑膠袋"," ", 0 ));
+
+        notesItems.add(new NotesItem(3, new Date().getTime(), Colors.ORANGE,
+                "週二、四、六：\n立體類︰乾淨保麗龍, 一般類（瓶罐、容器、小家電等）",
+                "立體類︰乾淨保麗龍\n一般類（瓶罐、容器、小家電等）"," ", 0 ));
+
+        // 建立自定Adapter物件
+        notesItemAdapter = new NotesItemAdapter(this, R.layout.singleitem, notesItems);
+        mListNote.setAdapter(notesItemAdapter);
 
 
         // 建立選單項目點擊監聽物件
@@ -134,15 +161,29 @@ public class MainActivity extends AppCompatActivity {
             // 第四個參數在這裡沒有用途
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // 讀取選擇的記事物件
+                NotesItem notesItem = notesItemAdapter.getItem(position);
                 // 使用Action名稱建立啟動另一個Activity元件需要的Intent物件
-                Intent intent = new Intent("com.admin.claire.garbag_truck.EDIT_ITEM");
 
-                // 設定記事編號與標題
-                intent.putExtra("position", position);
-                intent.putExtra("titleText", data.get(position));
+                // 如果已經有勾選的項目
+                if (selectedCount > 0) {
+                    // 處理是否顯示已選擇項目
+                    processMenu(notesItem);
+                    // 重新設定記事項目
+                    notesItemAdapter.set(position, notesItem);
+                }
+                else {
 
-                // 呼叫「startActivityForResult」，第二個參數「1」表示執行修改
-                startActivityForResult(intent, 1);
+                    Intent intent = new Intent("com.admin.claire.garbag_truck.EDIT_ITEM");
+
+                    // 設定記事編號與標題
+                    intent.putExtra("position", position);
+                    intent.putExtra("com.admin.claire.garbag_truck.ITEM", notesItem);
+
+                    // 呼叫「startActivityForResult」，第二個參數「1」表示執行修改
+                    startActivityForResult(intent, 1);
+                }
+
             }
         };
         // 註冊選單項目點擊監聽物件
@@ -154,16 +195,41 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
-                Toast.makeText(MainActivity.this, "Long:" + data.get(position),
-                        Toast.LENGTH_SHORT).show();
-                return false;
+                // 讀取選擇的記事物件
+                NotesItem notesItem = notesItemAdapter.getItem(position);
+                // 處理是否顯示已選擇項目
+                processMenu(notesItem);
+                // 重新設定記事項目
+                notesItemAdapter.set(position, notesItem);
+                return true;
             }
         };
         // 註冊選單項目長按監聽物件
         mListNote.setOnItemLongClickListener(itemLongListener);
-
     }
 
+    // 處理是否顯示已選擇項目
+    private void processMenu(NotesItem notesItem) {
+        // 如果需要設定記事項目
+        if (notesItem != null) {
+            // 設定已勾選的狀態
+            notesItem.setSelected(!notesItem.isSelected());
+
+            // 計算已勾選數量
+            if (notesItem.isSelected()) {
+                selectedCount++;
+            }
+            else {
+                selectedCount--;
+            }
+        }
+        // 根據選擇的狀況，設定是否顯示選單項目
+       // search_item.setVisible(selectedCount == 0);
+        revert_item.setVisible(selectedCount > 0);
+        delete_item.setVisible(selectedCount > 0);
+    }
+
+    //各別列表明細
     private View.OnClickListener mGarbageImgListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -173,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-   //定位所有明細
+   //地圖定位所有明細
     private View.OnClickListener mLocationImgListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -313,4 +379,79 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+
+        // 取得選單項目物件
+        //search_item = menu.findItem(R.id.search_item);
+        revert_item = menu.findItem(R.id.revert_item);
+        delete_item = menu.findItem(R.id.delete_item);
+
+        // 設定選單項目
+        processMenu(null);
+
+        return true;
+    }
+
+    // 使用者選擇所有的Menu選單項目都會呼叫這個方法
+    public void clickMenuItem (MenuItem item) {
+        // 使用參數取得使用者選擇的選單項目元件編號
+        int itemId = item.getItemId();
+        switch (itemId){
+            // 取消所有已勾選的項目
+            case R.id.revert_item:
+                for (int i = 0; i < notesItemAdapter.getCount(); i++) {
+                    NotesItem revert = notesItemAdapter.getItem(i);
+
+                    if (revert.isSelected()) {
+                        revert.setSelected(false);
+                        notesItemAdapter.set(i, revert);
+                    }
+                }
+                selectedCount = 0;
+                processMenu(null);
+                break;
+
+            // 刪除
+            case R.id.delete_item:
+                // 沒有選擇
+                if (selectedCount == 0) {
+                    break;
+                }
+                // 建立與顯示詢問是否刪除的對話框
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                String message = getString(R.string.delete_item);
+                dialog.setTitle(R.string.delete)
+                      .setMessage(String.format(message, selectedCount));
+                dialog.setPositiveButton(android.R.string.yes,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 刪除所有已勾選的項目
+                                int index = notesItemAdapter.getCount() - 1;
+
+                                while(index > -1) {
+                                    NotesItem notesItem = notesItemAdapter.get(index);
+
+                                    if (notesItem.isSelected()){
+                                        notesItemAdapter.remove(notesItem);
+                                    }
+                                    index--;
+                                }
+                                // 通知資料改變
+                                notesItemAdapter.notifyDataSetChanged();
+                                selectedCount = 0;
+                                processMenu(null);
+                            }
+                        });
+                dialog.setNegativeButton(android.R.string.no, null);
+                dialog.show();
+
+                break;
+        }
+
+    }
 }

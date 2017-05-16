@@ -14,6 +14,9 @@
     <string name="content">內容</string>
     <string name="btn_ok">確認</string>
     <string name="btn_cancel">取消</string>
+    <string name="revert">還原</string>
+    <string name="delete">刪除</string>
+    <string name="delete_item">確定要刪除 %1$d 個項目？</string>
 
     <string-array name="area">
         <item>中正區</item>

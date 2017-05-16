@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:descendantFocusability="beforeDescendants">
+
+
+        <!-- 顏色分類 -->
+        <RelativeLayout
+            android:id="@+id/type_color"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/item_drawable">
+
+            <!-- 勾選 -->
+            <ImageView
+                android:id="@+id/selected_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_delete"
+                android:background="#ffffff"
+                android:visibility="invisible"
+                android:layout_marginTop="16dp"
+                tools:ignore="ContentDescription" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/card_background_selector"
+            android:descendantFocusability="afterDescendants"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp">
+
+            <!-- 標題 -->
+            <TextView
+                android:id="@+id/notesTitle_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textColor="#337ebf"
+                android:textSize="16sp"
+                android:paddingBottom="2dp"/>
+
+            <!-- 日期時間 -->
+            <TextView
+                android:id="@+id/date_text"
+                android:paddingTop="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="" />
+
+        </LinearLayout>
+
+</LinearLayout>
