@@ -24,6 +24,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.admin.claire.garbag_truck.database.NotesItemDAO;
 import com.admin.claire.garbag_truck.preference.PrefActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
     // 已選擇項目數量
     private int selectedCount = 0;
 
+    // 宣告資料庫功能類別欄位變數
+    private NotesItemDAO notesItemDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +77,32 @@ public class MainActivity extends AppCompatActivity {
 
         getData();
         initView();
+
+        // 建立資料庫物件
+        notesItemDAO = new NotesItemDAO(getApplicationContext());
+
+        // 如果資料庫是空的，就建立一些範例資料
+        // 這是為了方便測試用的，完成應用程式以後可以拿掉
+        if (notesItemDAO.getCount() == 0) {
+            notesItemDAO.sample();
+        }
+
+        // 取得所有記事資料
+        notesItems = notesItemDAO.getAll();
+        notesItemAdapter = new NotesItemAdapter(this, R.layout.singleitem, notesItems);
+        mListNote.setAdapter(notesItemAdapter);
+
         initListViewHandler();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 取得所有記事資料
+        notesItems = notesItemDAO.getAll();
+        notesItemAdapter = new NotesItemAdapter(this, R.layout.singleitem, notesItems);
+        mListNote.setAdapter(notesItemAdapter);
     }
 
     private void initView() {
@@ -104,9 +133,8 @@ public class MainActivity extends AppCompatActivity {
 
             // 如果是新增記事
             if (requestCode == 0){
-                // 設定記事物件的編號與日期時間
-                notesItem.setId(notesItems.size() + 1);
-                notesItem.setDatetime(new Date().getTime());
+                // 新增記事資料到資料庫
+                notesItem = notesItemDAO.insert(notesItem);
 
                 // 加入新增的記事物件
                 notesItems.add(notesItem);
@@ -120,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
                 int position = data.getIntExtra("position", -1);
 
                 if (position != -1) {
-                    // 設定修改的記事物件
-                    notesItems.set(position, notesItem);
+                    // 修改資料庫中的記事資料
+                    notesItemDAO.update(notesItem);
 
                     // 通知資料已經改變，ListView元件才會重新顯示
                     notesItemAdapter.notifyDataSetChanged();
@@ -134,24 +162,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initListViewHandler() {
-        // 加入範例資料
-        notesItems = new ArrayList<NotesItem>();
-
-        notesItems.add(new NotesItem(1, new Date().getTime(), Colors.RED,
-                "週日、三：\n 停收垃圾及資源回收物(廚餘)",
-                "停收垃圾及資源回收物(廚餘)"," ", 0 ));
-
-        notesItems.add(new NotesItem(2, new Date().getTime(), Colors.GREEN,
-                "週一、五：\n平面類：紙類,舊衣類,乾淨塑膠袋",
-                "平面類：\n紙類,舊衣類,乾淨塑膠袋"," ", 0 ));
-
-        notesItems.add(new NotesItem(3, new Date().getTime(), Colors.ORANGE,
-                "週二、四、六：\n立體類︰乾淨保麗龍, 一般類（瓶罐、容器、小家電等）",
-                "立體類︰乾淨保麗龍\n一般類（瓶罐、容器、小家電等）"," ", 0 ));
-
-        // 建立自定Adapter物件
-        notesItemAdapter = new NotesItemAdapter(this, R.layout.singleitem, notesItems);
-        mListNote.setAdapter(notesItemAdapter);
+//        // 加入範例資料
+//        notesItems = new ArrayList<NotesItem>();
+//
+//        notesItems.add(new NotesItem(1, new Date().getTime(), Colors.RED,
+//                "週日、三：\n 停收垃圾及資源回收物(廚餘)",
+//                "停收垃圾及資源回收物(廚餘)"," ", 0 ));
+//
+//        notesItems.add(new NotesItem(2, new Date().getTime(), Colors.GREEN,
+//                "週一、五：\n平面類：紙類,舊衣類,乾淨塑膠袋",
+//                "平面類：\n紙類,舊衣類,乾淨塑膠袋"," ", 0 ));
+//
+//        notesItems.add(new NotesItem(3, new Date().getTime(), Colors.ORANGE,
+//                "週二、四、六：\n立體類︰乾淨保麗龍, 一般類（瓶罐、容器、小家電等）",
+//                "立體類︰乾淨保麗龍\n一般類（瓶罐、容器、小家電等）"," ", 0 ));
+//
+//        // 建立自定Adapter物件
+//        notesItemAdapter = new NotesItemAdapter(this, R.layout.singleitem, notesItems);
+//        mListNote.setAdapter(notesItemAdapter);
 
 
         // 建立選單項目點擊監聽物件
@@ -433,6 +461,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // 刪除所有已勾選的項目
+                                // 取得最後一個元素的編號
                                 int index = notesItemAdapter.getCount() - 1;
 
                                 while(index > -1) {
@@ -440,6 +469,8 @@ public class MainActivity extends AppCompatActivity {
 
                                     if (notesItem.isSelected()){
                                         notesItemAdapter.remove(notesItem);
+                                        // 刪除資料庫中的記事資料
+                                        notesItemDAO.delete(notesItem.getId());
                                     }
                                     index--;
                                 }

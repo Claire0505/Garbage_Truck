@@ -102,6 +102,27 @@ public class NotesActivity extends AppCompatActivity {
         });
     }
 
+    public static Colors getColors(int color) {
+        Colors result = Colors.BLUE;
+
+        if (color == Colors.LIGHTGRAY.parseColor()) {
+            result = Colors.LIGHTGRAY;
+        }
+        else if (color == Colors.ORANGE.parseColor()) {
+            result = Colors.ORANGE;
+        }
+        else if (color == Colors.PURPLE.parseColor()) {
+            result = Colors.PURPLE;
+        }
+        else if (color == Colors.RED.parseColor()) {
+            result = Colors.RED;
+        }
+        else if (color == Colors.GREEN.parseColor()) {
+            result = Colors.GREEN;
+        }
+        return result;
+    }
+
     private void initHandler() {
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,25 +173,4 @@ public class NotesActivity extends AppCompatActivity {
 
     }
 
-
-    public static Colors getColors(int color) {
-        Colors result = Colors.BLUE;
-
-        if (color == Colors.LIGHTGRAY.parseColor()) {
-            result = Colors.LIGHTGRAY;
-        }
-        else if (color == Colors.ORANGE.parseColor()) {
-            result = Colors.ORANGE;
-        }
-        else if (color == Colors.PURPLE.parseColor()) {
-            result = Colors.PURPLE;
-        }
-        else if (color == Colors.RED.parseColor()) {
-            result = Colors.RED;
-        }
-        else if (color == Colors.GREEN.parseColor()) {
-            result = Colors.GREEN;
-        }
-        return result;
-    }
 }

@@ -114,7 +114,7 @@ public class Garbagetruck_List_Activity extends FragmentActivity
                 .position(garbage)
                 .title(title)
                 .snippet(content)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.signs)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.transport1)));
 
 
         //建立位置的座標物件

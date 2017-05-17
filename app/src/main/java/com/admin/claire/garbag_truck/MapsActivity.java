@@ -169,7 +169,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .position(new LatLng(o.getDouble("lat"), o.getDouble("lng")))
                         .title(o.getString("title"))
                         .snippet(o.getString("content"))
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.signs))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.transport1))
                 );
 
             }
