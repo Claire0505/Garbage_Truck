@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -46,7 +47,9 @@ public class ColorActivity extends AppCompatActivity {
     private class ColorListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
+
             String action = ColorActivity.this.getIntent().getAction();
+
             // 經由設定元件啟動
             if (action != null && action.equals("com.admin.claire.garbag_truck.CHOOSE_COLOR")) {
                 // 建立SharedPreferences物件

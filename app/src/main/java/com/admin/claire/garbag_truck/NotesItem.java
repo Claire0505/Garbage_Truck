@@ -17,6 +17,8 @@ public class NotesItem implements java.io.Serializable {
     private String fileName;
     private long lastModify;
     private boolean selected;
+    // 提醒日期時間
+    private long alarmDatetime;
 
     public NotesItem(){
         title = "";
@@ -114,5 +116,13 @@ public class NotesItem implements java.io.Serializable {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public long getAlarmDatetime() {
+        return alarmDatetime;
+    }
+
+    public void setAlarmDatetime(long alarmDatetime) {
+        this.alarmDatetime = alarmDatetime;
     }
 }

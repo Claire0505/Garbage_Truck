@@ -74,7 +74,7 @@ public class NotesItemAdapter extends ArrayAdapter<NotesItem> {
 
     // 設定指定編號的記事資料
     public void set(int index, NotesItem item){
-        if (index > 0 && index < items.size()) {
+        if (index >= 0 && index < items.size()) {
             items.set(index, item);
             notifyDataSetChanged();
         }

@@ -17,6 +17,7 @@
     <string name="revert">還原</string>
     <string name="delete">刪除</string>
     <string name="delete_item">確定要刪除 %1$d 個項目？</string>
+    <string name="write_external_storage_denied">沒有寫入外部儲存設備授權</string>
 
     <string-array name="area">
         <item>中正區</item>

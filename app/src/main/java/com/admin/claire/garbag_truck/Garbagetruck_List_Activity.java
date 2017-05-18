@@ -143,6 +143,7 @@ public class Garbagetruck_List_Activity extends FragmentActivity
         // 已經連線到Google Services
         // 啟動位置更新服務
         Toast.makeText(Garbagetruck_List_Activity.this, "Google API 連線成功", Toast.LENGTH_SHORT).show();
+        //啟用定位權限
         Location location = enableLocationAndGetLastLocation(true);
         if (location != null) {
             Toast.makeText(Garbagetruck_List_Activity.this, "成功取得上一次定位", Toast.LENGTH_SHORT).show();

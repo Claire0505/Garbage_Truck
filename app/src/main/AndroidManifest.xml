@@ -3,6 +3,15 @@
     package="com.admin.claire.garbag_truck">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 需要攝錄鏡頭設備 -->
+    <uses-feature android:name="android.hardware.camera" />
+    <!-- 寫入外部儲存設備 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 接收開機完成廣播事件 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- 加入震動的授權
+    <uses-permission android:name="android.permission.VIBRATE"/>-->
+
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -79,19 +88,39 @@
             android:name=".InfoActivity"
             android:theme="@style/Dialog" />
 
-        <!-- 選擇顏色項目元件 使用Dialog 方式呈現-->
-        <activity android:name=".ColorActivity"
+        <!-- 選擇顏色項目元件 使用Dialog 方式呈現 -->
+        <activity
+            android:name=".ColorActivity"
             android:theme="@style/DialogColor">
-            <!-- 加入設定元件啟動用的Action名稱 mypreference.xml，也加入啟動選擇顏色元件的設定-->
+
+            <!-- 加入設定元件啟動用的Action名稱 mypreference.xml，也加入啟動選擇顏色元件的設定 -->
             <intent-filter>
-                <action android:name="com.admin.claire.garbag_truck.CHOOSE_COLOR"/>
+                <action android:name="com.admin.claire.garbag_truck.CHOOSE_COLOR" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
 
         <!-- 設定元件 Preference -->
         <activity android:name=".preference.PrefActivity" />
+
+        <!-- 檢視照片元件 -->
+        <activity android:name=".PictureActivity" />
+
+        <receiver
+            android:name=".broadcast.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"/>
+
+        <receiver
+            android:name=".broadcast.InitAlarmReceive"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

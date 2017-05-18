@@ -30,6 +30,8 @@ public class NotesItemDAO {
     public static final String CONTENT_COLUMN = "content";
     public static final String FILENAME_COLUMN = "filename";
     public static final String LASTMODIFY_COLUMN = "lastmodify";
+    // 提醒日期時間
+    public static final String ALARMDATETIME_COLUMN = "alarmdatetime";
 
     // 使用上面宣告的變數建立表格的SQL指令
     public static final String CREATE_TABLE =
@@ -40,7 +42,8 @@ public class NotesItemDAO {
                     TITLE_COLUMN + " TEXT NOT NULL, " +
                     CONTENT_COLUMN + " TEXT NOT NULL, " +
                     FILENAME_COLUMN + " TEXT, " +
-                    LASTMODIFY_COLUMN + " INTEGER) ";
+                    LASTMODIFY_COLUMN + " INTEGER, " +
+                    ALARMDATETIME_COLUMN + " INTEGER)";
 
     // 資料庫物件
     private SQLiteDatabase db;
@@ -68,6 +71,8 @@ public class NotesItemDAO {
         cv.put(CONTENT_COLUMN, notesItem.getContent());
         cv.put(FILENAME_COLUMN, notesItem.getFileName());
         cv.put(LASTMODIFY_COLUMN, notesItem.getLastModify());
+        // 提醒日期時間
+        cv.put(ALARMDATETIME_COLUMN, notesItem.getAlarmDatetime());
 
         // 新增一筆資料並取得編號
         // 第一個參數是表格名稱
@@ -94,6 +99,8 @@ public class NotesItemDAO {
         cv.put(CONTENT_COLUMN, notesItem.getContent());
         cv.put(FILENAME_COLUMN, notesItem.getFileName());
         cv.put(LASTMODIFY_COLUMN, notesItem.getLastModify());
+        // 提醒日期時間
+        cv.put(ALARMDATETIME_COLUMN, notesItem.getAlarmDatetime());
 
         // 設定修改資料的條件為編號
         // 格式為「欄位名稱＝資料」
@@ -160,6 +167,8 @@ public class NotesItemDAO {
         result.setContent(cursor.getString(4));
         result.setFileName(cursor.getString(5));
         result.setLastModify(cursor.getLong(6));
+        // 提醒日期時間
+        result.setAlarmDatetime(cursor.getLong(7));
 
         // 回傳結果
         return result;

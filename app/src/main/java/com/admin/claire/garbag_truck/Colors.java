@@ -9,7 +9,7 @@ import android.graphics.Color;
 public enum Colors {
 
     BLUE("#2b8ade"),
-    LIGHTGRAY("#D3D3D3"),
+    LIGHTGRAY("#3d3838"),
     PURPLE("#AA66CC"),
     GREEN("#99CC00"),
     ORANGE("#FFBB33"),

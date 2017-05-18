@@ -187,7 +187,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // 已經連線到Google Services
         // 啟動位置更新服務
         Toast.makeText(MapsActivity.this, "Google API 連線成功", Toast.LENGTH_SHORT).show();
+        //啟用定位權限
         Location location = enableLocationAndGetLastLocation(true);
+
         if (location != null) {
             Toast.makeText(MapsActivity.this, "成功取得上一次定位", Toast.LENGTH_SHORT).show();
             onLocationChanged(location);
@@ -311,6 +313,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (googleApiClient.isConnected()) {
             googleApiClient.disconnect();
         }
+
     }
 
     //啟用定位權限和最後一次定位記錄
