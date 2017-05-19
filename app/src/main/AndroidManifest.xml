@@ -9,9 +9,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 接收開機完成廣播事件 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- 加入震動的授權
-    <uses-permission android:name="android.permission.VIBRATE"/>-->
-
+    <!-- 加入震動的授權 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -110,8 +109,7 @@
         <receiver
             android:name=".broadcast.AlarmReceiver"
             android:enabled="true"
-            android:exported="true"/>
-
+            android:exported="true" />
         <receiver
             android:name=".broadcast.InitAlarmReceive"
             android:enabled="true"
@@ -121,6 +119,24 @@
             </intent-filter>
         </receiver>
 
+        <!-- 小工具元件 -->
+        <receiver android:name=".appwidget.ItemAppWidget">
+            <!-- 一定要加入這個Action名稱的設定 -->
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <!-- 使用android:resource指定小工具專用設定檔的資源名稱 -->
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/item_app_widget_info" />
+        </receiver>
+        <!-- 小工具設定元件 -->
+        <activity android:name=".appwidget.ItemAppWidgetConfigureActivity">
+            <!-- 一定要加入這個設定 -->
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

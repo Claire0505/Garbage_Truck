@@ -35,16 +35,20 @@ public class InitAlarmReceive extends BroadcastReceiver {
                 continue;
             }
 
-            // 設定提醒
-            Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-            //alarmIntent.putExtra("title", notesItem.getTitle());
-            // 加入記事編號資料
-            intent.putExtra("id", notesItem.getId());
+            if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)){
+                // 設定提醒
+                Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+                //alarmIntent.putExtra("title", notesItem.getTitle());
+                // 加入記事編號資料
+                alarmIntent.putExtra("id", notesItem.getId());
 
-            PendingIntent pi = PendingIntent.getBroadcast(
-                    context, (int)notesItem.getId(),
-                    alarmIntent, PendingIntent.FLAG_ONE_SHOT);
-            am.set(AlarmManager.RTC_WAKEUP, notesItem.getAlarmDatetime(), pi);
+                PendingIntent pi = PendingIntent.getBroadcast(
+                        context, (int)notesItem.getId(),
+                        alarmIntent, PendingIntent.FLAG_ONE_SHOT);
+                am.set(AlarmManager.RTC_WAKEUP, notesItem.getAlarmDatetime(), pi);
+            }
+
+
         }
 
     }
