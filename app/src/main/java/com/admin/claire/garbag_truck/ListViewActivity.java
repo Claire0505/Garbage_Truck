@@ -3,7 +3,9 @@ package com.admin.claire.garbag_truck;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.SearchRecentSuggestions;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -56,11 +58,10 @@ public class ListViewActivity extends AppCompatActivity {
 
         lv = (ListView)findViewById(R.id.list);
         lv.setOnItemClickListener(onClickListView);
-        /*添加头和尾*/
-        lv.addHeaderView(new View(this));
-        lv.addFooterView(new View(this));
         getData();
+
     }
+
 
     private void getData(){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -154,7 +155,6 @@ public class ListViewActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 return false;
             }
 
@@ -168,7 +168,7 @@ public class ListViewActivity extends AppCompatActivity {
             }
         });
 
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     private AdapterView.OnItemClickListener onClickListView = new AdapterView.OnItemClickListener() {

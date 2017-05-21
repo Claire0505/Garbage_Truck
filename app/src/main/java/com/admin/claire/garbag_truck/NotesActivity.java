@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -214,6 +215,7 @@ public class NotesActivity extends AppCompatActivity {
         if (notesItem.getAlarmDatetime() != 0) {
             // 設定為已經儲存的提醒日期時間
             calendar.setTimeInMillis(notesItem.getAlarmDatetime());
+
         }
 
         // 讀取年、月、日、時、分
@@ -233,9 +235,10 @@ public class NotesActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 alarm.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 alarm.set(Calendar.MINUTE, minute);
-
                 notesItem.setAlarmDatetime(alarm.getTimeInMillis());
+
             }
+
         };
         // 選擇時間對話框
         final TimePickerDialog tpd  = new TimePickerDialog(
@@ -252,12 +255,14 @@ public class NotesActivity extends AppCompatActivity {
 
                 //繼續選擇提醒時間
                 tpd.show();
+
             }
         };
         // 建立與顯示選擇日期對話框
         final DatePickerDialog dpd = new DatePickerDialog(
                 this, dateSetListener, year, month, day);
         dpd.show();
+
     }
 
     //提醒功能

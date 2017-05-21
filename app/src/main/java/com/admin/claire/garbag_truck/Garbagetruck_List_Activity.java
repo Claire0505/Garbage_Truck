@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Garbagetruck_List_Activity extends FragmentActivity
@@ -46,7 +47,7 @@ public class Garbagetruck_List_Activity extends FragmentActivity
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    private TextView mTilte, mContent, mLng, mLat;
+    private TextView mTilte, mContent, mLng, mLat, mDistance;
     private GoogleMap mMap;
     private String TAG = "MAP: ";
 
@@ -194,9 +195,9 @@ public class Garbagetruck_List_Activity extends FragmentActivity
         if (currentMarker == null) {
             currentMarker = mMap.addMarker(new MarkerOptions().position(latLng));
 
-            //印出我的座標-經度緯度
-            Log.e("TAG", "我的座標 - 經度 : "
-                    + location.getLongitude() + "  , 緯度 : " + location.getLatitude() );
+//            //印出我的座標-經度緯度
+//            Log.e("TAG", "我的座標 - 經度 : "
+//                    + location.getLongitude() + "  , 緯度 : " + location.getLatitude() );
 
             mLng = (TextView)findViewById(R.id.lng_Text);
             mLat = (TextView)findViewById(R.id.lat_Text);
@@ -207,6 +208,7 @@ public class Garbagetruck_List_Activity extends FragmentActivity
             Double lngD  = Double.valueOf(lng);
             Double latD = Double.valueOf(lat);
 
+           //畫出兩點間的線條
             PolylineOptions polylineOpt = new PolylineOptions()
                     .width(15)
                     .color(Color.BLUE);
@@ -216,6 +218,17 @@ public class Garbagetruck_List_Activity extends FragmentActivity
             polylineOpt.addAll(listLatLng);
             Polyline polylineRoute = mMap.addPolyline(polylineOpt);
             polylineRoute.setVisible(true);
+
+            //帶入使用者及垃圾車經緯度可計算出距離
+            Double distance = Distance(location.getLongitude(),location.getLatitude(), lngD,latD);
+
+            mDistance = (TextView)findViewById(R.id.distance_Text);
+            mDistance.setText(getResources().getString(R.string.distance)
+                    + distance + getResources().getString(R.string.meter));
+
+            //Log.e(TAG, "距離為: "+ distance );
+            //Toast.makeText(this, "距離為: "+ distance , Toast.LENGTH_LONG).show();
+
 
             mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
@@ -230,6 +243,24 @@ public class Garbagetruck_List_Activity extends FragmentActivity
         // 移動地圖到目前的位置
        // moveMap(latLng);
     }
+
+
+    //帶入使用者及垃圾車經緯度可計算出距離
+    public double Distance(double longitude1, double latitude1, double longitude2,double latitude2)
+    {
+        double radLatitude1 = latitude1 * Math.PI / 180;
+        double radLatitude2 = latitude2 * Math.PI / 180;
+        double l = radLatitude1 - radLatitude2;
+        double p = longitude1 * Math.PI / 180 - longitude2 * Math.PI / 180;
+        double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(l / 2), 2)
+                + Math.cos(radLatitude1) * Math.cos(radLatitude2)
+                * Math.pow(Math.sin(p / 2), 2)));
+        distance = distance * 6378137.0;
+        distance = Math.round(distance * 10000) / 10000;
+
+        return distance ;
+    }
+
 
     // 建立Google API用戶端物件
     private synchronized void configGoogleApiClient() {
