@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -55,6 +56,10 @@ public class NotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
+        //啟用<- up按鈕
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         initView();
         initHandler();
 
@@ -95,6 +100,8 @@ public class NotesActivity extends AppCompatActivity {
                     notesItem.setColor(getColors(colorId));
                     break;
             }
+
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -187,6 +194,7 @@ public class NotesActivity extends AppCompatActivity {
                         // 讀取設定的預設顏色
                         int color = sharedPreferences.getInt("DEFAULT_COLOR", -1);
                         notesItem.setColor(getColors(color));
+
                     }
 
                     // 取得回傳資料用的Intent物件

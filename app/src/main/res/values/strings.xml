@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">台北市垃圾車</string>
+    <string name="notebook">記事本</string>
+    <string name="tag">標籤顏色</string>
+    <string name="about">關於</string>
+    <string name="direction">說明</string>
     <string name="google_play_service_missing">裝置沒有安裝Google Play服務</string>
-    <string name="search">search</string>
-    <string name="settings">settings</string>
-    <string name="search_title">搜尋標題</string>
+    <string name="search">Search</string>
+    <string name="settings">設定</string>
+    <string name="search_title">輸入行政區查詢:</string>
     <string name="search_hint">提示</string>
     <string name="lng">經度:</string>
     <string name="lat">緯度:</string>

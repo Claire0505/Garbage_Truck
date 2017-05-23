@@ -4,8 +4,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 
 import com.admin.claire.garbag_truck.NotesActivity;
 import com.admin.claire.garbag_truck.NotesItem;
@@ -15,7 +17,7 @@ import com.admin.claire.garbag_truck.R;
  * Created by claire on 2017/5/16.
  */
 
-public class PrefActivity extends PreferenceActivity {
+public class PrefActivity extends PreferenceActivity   {
     // 加入欄位變數宣告
     private SharedPreferences sharedPreferences;
     private Preference defaultColor;
@@ -23,6 +25,11 @@ public class PrefActivity extends PreferenceActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //啟用<- up按鈕
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+
         // 指定使用的設定畫面配置資源
         // 這行敘述從API Level 11開始會產生警告訊息
         // 不過不會影響應用程式的運作
@@ -47,4 +54,6 @@ public class PrefActivity extends PreferenceActivity {
                     ": " + NotesActivity.getColors(color));
         }
     }
+
+
 }

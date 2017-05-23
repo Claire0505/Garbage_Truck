@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- 加入震動的授權 -->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 檢查網路狀態的權限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -26,11 +28,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="android.app.searchable"
             android:resource="@xml/searchable" />
-
 
         <activity
             android:name=".MainActivity"
@@ -46,10 +46,10 @@
 
         <activity
             android:name=".ListViewActivity"
-            android:screenOrientation="portrait">
+            android:label="@string/search"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
 
-        </activity>
-        
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -77,6 +77,8 @@
         <!-- 記事項目元件 -->
         <activity
             android:name=".NotesActivity"
+            android:label="@string/notebook"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
 
@@ -97,6 +99,7 @@
         <!-- 選擇顏色項目元件 使用Dialog 方式呈現 -->
         <activity
             android:name=".ColorActivity"
+            android:label="@string/tag"
             android:theme="@style/DialogColor">
 
             <!-- 加入設定元件啟動用的Action名稱 mypreference.xml，也加入啟動選擇顏色元件的設定 -->
@@ -128,6 +131,7 @@
 
         <!-- 小工具元件 -->
         <receiver android:name=".appwidget.ItemAppWidget">
+
             <!-- 一定要加入這個Action名稱的設定 -->
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -139,11 +143,21 @@
         </receiver>
         <!-- 小工具設定元件 -->
         <activity android:name=".appwidget.ItemAppWidgetConfigureActivity">
+
             <!-- 一定要加入這個設定 -->
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".drawerlayout.AboutActivity"
+            android:label="@string/about"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".drawerlayout.DirectionsActivity"
+            android:label="@string/direction"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

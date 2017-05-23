@@ -2,10 +2,16 @@ package com.admin.claire.garbag_truck;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.provider.SearchRecentSuggestions;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -55,13 +61,15 @@ public class ListViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
+        //啟用<- up按鈕
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         lv = (ListView)findViewById(R.id.list);
         lv.setOnItemClickListener(onClickListView);
         getData();
 
     }
-
 
     private void getData(){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -149,7 +157,7 @@ public class ListViewActivity extends AppCompatActivity {
         searchView.setFocusable(false);
         searchView.requestFocusFromTouch();      //要點選後才會開啟鍵盤輸入
         searchView.setSubmitButtonEnabled(false);//輸入框後是否要加上送出的按鈕
-        searchView.setQueryHint("輸入行政區查詢: 內湖區...."); //輸入框沒有值時要顯示的提示文字
+        searchView.setQueryHint("輸入行政區查詢: 內湖區..."); //輸入框沒有值時要顯示的提示文字
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -194,6 +202,7 @@ public class ListViewActivity extends AppCompatActivity {
 
 //           Toast.makeText(MainActivity.this, "點選第 " + (position + 1)
 //                   + "個\n內容:" + title , Toast.LENGTH_SHORT).show();
+
         }
     };
 

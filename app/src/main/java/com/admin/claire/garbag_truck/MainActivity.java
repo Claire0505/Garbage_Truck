@@ -6,7 +6,16 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -28,6 +38,8 @@ import android.widget.Toast;
 
 import com.admin.claire.garbag_truck.broadcast.AlarmReceiver;
 import com.admin.claire.garbag_truck.database.NotesItemDAO;
+import com.admin.claire.garbag_truck.drawerlayout.AboutActivity;
+import com.admin.claire.garbag_truck.drawerlayout.DirectionsActivity;
 import com.admin.claire.garbag_truck.preference.PrefActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -45,6 +57,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private LinearLayout settings_Layout, about_Layout, direction_Layout;
+    private Snackbar snackbar;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mActionBarDrawerToggle;
     private ListView mListNote;
     private ImageView mGarbageImg;
     private ImageView mLocationImg;
@@ -80,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         getData();
         initView();
+        initLayout();
 
         // 建立資料庫物件
         notesItemDAO = new NotesItemDAO(getApplicationContext());
@@ -104,28 +121,6 @@ public class MainActivity extends AppCompatActivity {
         notesItems = notesItemDAO.getAll();
         notesItemAdapter = new NotesItemAdapter(this, R.layout.singleitem, notesItems);
         mListNote.setAdapter(notesItemAdapter);
-    }
-
-    private void initView() {
-        icon_img = (ImageView) findViewById(R.id.icon_img);
-        weather = (TextView)findViewById(R.id.textWeather);
-        weather_temp = (TextView)findViewById(R.id.textTemp);
-        mListNote = (ListView)findViewById(R.id.listNote);
-        mGarbageImg = (ImageView)findViewById(R.id.imageTruck);
-        mLocationImg = (ImageView)findViewById(R.id.imageLocation);
-        mInfoImg = (ImageView)findViewById(R.id.imageInfo);
-        mNoteImg = (ImageView)findViewById(R.id.imageNote);
-        // 註冊監聽物件
-        mGarbageImg.setOnClickListener(mGarbageImgListener);
-        mLocationImg.setOnClickListener(mLocationImgListener);
-        mNoteImg.setOnClickListener(mNoteImgListener);
-        mInfoImg.setOnClickListener(mInfoImgListener);
-
-        // 註冊選單項目點擊監聽物件
-        mListNote.setOnItemClickListener(itemListener);
-        // 註冊選單項目長按監聽物件
-        mListNote.setOnItemLongClickListener(itemLongListener);
-
     }
 
     @Override
@@ -269,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener mGarbageImgListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            netWork(v);
             //onClick時的動畫旋轉效果
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
             startActivity(new Intent(MainActivity.this, ListViewActivity.class));
@@ -279,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener mLocationImgListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+           // netWork(v);
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
             startActivity(new Intent(MainActivity.this, MapsActivity.class));
         }
@@ -434,14 +431,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (mActionBarDrawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
         // 使用參數取得使用者選擇的選單項目元件編號
         int itemId = item.getItemId();
         switch (itemId){
-            //設定元件
-            case R.id.setting_item:
-                // 啟動設定元件
-                startActivity(new Intent(this, PrefActivity.class));
-                break;
 
             // 取消所有已勾選的項目
             case R.id.revert_item:
@@ -500,72 +495,121 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // 使用者選擇所有的Menu選單項目都會呼叫這個方法
-    public void clickMenuItem (MenuItem item) {
-        // 使用參數取得使用者選擇的選單項目元件編號
-        int itemId = item.getItemId();
-        switch (itemId){
+    private void netWork(View view){
+        ConnectivityManager mConnectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
 
-            // 取消所有已勾選的項目
-            case R.id.revert_item:
-                for (int i = 0; i < notesItemAdapter.getCount(); i++) {
-                    NotesItem revert = notesItemAdapter.getItem(i);
-
-                    if (revert.isSelected()) {
-                        revert.setSelected(false);
-                        notesItemAdapter.set(i, revert);
-                    }
-                }
-                selectedCount = 0;
-                processMenu(null);
-                break;
-
-            // 刪除
-            case R.id.delete_item:
-                // 沒有選擇
-                if (selectedCount == 0) {
-                    break;
-                }
-                // 建立與顯示詢問是否刪除的對話框
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                String message = getString(R.string.delete_item);
-                dialog.setTitle(R.string.delete)
-                      .setMessage(String.format(message, selectedCount));
-                dialog.setPositiveButton(android.R.string.yes,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // 刪除所有已勾選的項目
-                                // 取得最後一個元素的編號
-                                int index = notesItemAdapter.getCount() - 1;
-
-                                while(index > -1) {
-                                    NotesItem notesItem = notesItemAdapter.get(index);
-
-                                    if (notesItem.isSelected()){
-                                        notesItemAdapter.remove(notesItem);
-                                        // 刪除資料庫中的記事資料
-                                        notesItemDAO.delete(notesItem.getId());
-                                    }
-                                    index--;
-                                }
-                                // 通知資料改變
-                                notesItemAdapter.notifyDataSetChanged();
-                                selectedCount = 0;
-                                processMenu(null);
-                            }
-                        });
-                dialog.setNegativeButton(android.R.string.no, null);
-                dialog.show();
-
-                break;
+        if(mNetworkInfo == null || !mNetworkInfo.isAvailable())
+        {
+            //網路尚未連線
+            Toast.makeText(this, "網路尚未連線", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(view, "網路尚未連線",
+                    Snackbar.LENGTH_INDEFINITE)
+                    .setDuration(8000);
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#FF4444"));
+            snackbar.show();
+        }
+        else
+        {
+            //網路已連線
+            Toast.makeText(this, "網路已連線", Toast.LENGTH_SHORT).show();
+//            Snackbar snackbar = Snackbar.make(view, "網路已連線",
+//                    Snackbar.LENGTH_INDEFINITE)
+//                    .setDuration(5000);
+//            View snackBarView = snackbar.getView();
+//            snackBarView.setBackgroundColor(Color.parseColor("#2b8ade"));
+//
+//            snackbar.show();
         }
 
     }
 
-    // 設定
-    public void clickPreferences(MenuItem item) {
-        // 啟動設定元件
-        startActivity(new Intent(this, PrefActivity.class));
+    private void initView() {
+        settings_Layout = (LinearLayout)findViewById(R.id.setting_layout);
+        about_Layout = (LinearLayout)findViewById(R.id.about_layout);
+        direction_Layout = (LinearLayout)findViewById(R.id.direction_layout);
+
+        icon_img = (ImageView) findViewById(R.id.icon_img);
+        weather = (TextView)findViewById(R.id.textWeather);
+        weather_temp = (TextView)findViewById(R.id.textTemp);
+        mListNote = (ListView)findViewById(R.id.listNote);
+        mGarbageImg = (ImageView)findViewById(R.id.imageTruck);
+        mLocationImg = (ImageView)findViewById(R.id.imageLocation);
+        mInfoImg = (ImageView)findViewById(R.id.imageInfo);
+        mNoteImg = (ImageView)findViewById(R.id.imageNote);
+        // 註冊監聽物件
+        mGarbageImg.setOnClickListener(mGarbageImgListener);
+        mLocationImg.setOnClickListener(mLocationImgListener);
+        mNoteImg.setOnClickListener(mNoteImgListener);
+        mInfoImg.setOnClickListener(mInfoImgListener);
+
+        // 註冊選單項目點擊監聽物件
+        mListNote.setOnItemClickListener(itemListener);
+        // 註冊選單項目長按監聽物件
+        mListNote.setOnItemLongClickListener(itemLongListener);
+
+        //側開式選單
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.app_name,R.string.app_name){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+        };
+        mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
+
     }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mActionBarDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mActionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private void initLayout() {
+        settings_Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 啟動設定元件
+                startActivity(new Intent(MainActivity.this, PrefActivity.class));
+                mDrawerLayout.closeDrawers();
+            }
+        });
+        about_Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                mDrawerLayout.closeDrawers();
+            }
+        });
+        direction_Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DirectionsActivity.class));
+                mDrawerLayout.closeDrawers();
+            }
+        });
+    }
+
+
+
+
 }
