@@ -1,9 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.admin.claire.garbag_truck.drawerlayout.DirectionsActivity">
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@drawable/background"
+    tools:context="com.admin.claire.garbag_truck.drawerlayout.DirectionsActivity"
+    android:weightSum="1">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/card_background"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/circle_button"
+            app:srcCompat="@drawable/transport"
+            android:contentDescription="@string/about"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dirsearch" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/card_background"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/circle_button"
+            app:srcCompat="@drawable/ic_location_on_black_36dp"
+            android:contentDescription="@string/about"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dirlocation" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/card_background"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/circle_button"
+            app:srcCompat="@drawable/notes"
+            android:contentDescription="@string/about"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dirdel" />
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:paddingBottom="4dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/diredit"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/card_background"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/circle_button"
+            app:srcCompat="@drawable/ic_alarm_on_black_36dp"
+            android:contentDescription="@string/about"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/diralarm" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/card_background"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/circle_button"
+            app:srcCompat="@drawable/ic_add_a_photo_black_36dp"
+            android:contentDescription="@string/about"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dirphoto" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:layout_marginTop="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:background="@drawable/card_background"
+        android:orientation="horizontal"
+        tools:ignore="InefficientWeight">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/circle_button"
+            app:srcCompat="@drawable/ic_bookmark_black_36dp"
+            android:contentDescription="@string/about"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dirtag"
+                android:paddingBottom="4dp"/>
+            <TextView
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/diredittag" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/card_background"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/circle_button"
+            app:srcCompat="@drawable/ic_now_widgets"
+            android:contentDescription="@string/about"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dirwidget" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

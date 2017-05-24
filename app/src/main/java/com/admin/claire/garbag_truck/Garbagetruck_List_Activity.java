@@ -116,7 +116,7 @@ public class Garbagetruck_List_Activity extends FragmentActivity
                 .position(garbage)
                 .title(title)
                 .snippet(content)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.transport1)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.garbagetruck)));
 
 
         //建立位置的座標物件
@@ -224,7 +224,7 @@ public class Garbagetruck_List_Activity extends FragmentActivity
             Double distance = Distance(location.getLongitude(),location.getLatitude(), lngD,latD);
 
             mDistance = (TextView)findViewById(R.id.distance_Text);
-            mDistance.setText(getResources().getString(R.string.distance)
+            mDistance.setText(getResources().getString(R.string.distance) + " "
                     + distance + getResources().getString(R.string.meter));
 
             //Log.e(TAG, "距離為: "+ distance );

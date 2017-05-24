@@ -43,13 +43,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ListViewActivity"
             android:label="@string/search"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
-
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -149,15 +147,16 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".drawerlayout.AboutActivity"
+        <activity
+            android:name=".drawerlayout.AboutActivity"
             android:label="@string/about"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".drawerlayout.DirectionsActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".drawerlayout.DirectionsActivity"
             android:label="@string/direction"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

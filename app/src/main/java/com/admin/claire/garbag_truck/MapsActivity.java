@@ -169,7 +169,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .position(new LatLng(o.getDouble("lat"), o.getDouble("lng")))
                         .title(o.getString("title"))
                         .snippet(o.getString("content"))
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.transport1))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.garbagetruck))
                 );
 
             }
@@ -242,16 +242,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //            //印出我的座標-經度緯度
 //           Log.e("TAG", "我的座標 - 經度 : "
 //                    + location.getLongitude() + "  , 緯度 : " + location.getLatitude() );
-//
-//            PolylineOptions polylineOpt = new PolylineOptions()
-//                    .width(15)
-//                    .color(Color.BLUE);
-//            ArrayList<LatLng> listLatLng = new ArrayList<LatLng>();
-//            listLatLng.add(new LatLng(location.getLatitude(), location.getLongitude()));
-//            listLatLng.add(new LatLng(25.072434, 121.619185));
-//            polylineOpt.addAll(listLatLng);
-//            Polyline polylineRoute = mMap.addPolyline(polylineOpt);
-//            polylineRoute.setVisible(true);
+
         }
         else {
             currentMarker.setPosition(latLng);

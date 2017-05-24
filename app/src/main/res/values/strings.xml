@@ -3,6 +3,18 @@
     <string name="notebook">記事本</string>
     <string name="tag">標籤顏色</string>
     <string name="about">關於</string>
+    <string name="version">Version 5.0.1</string>
+    <string name="taipei">原始資料來源:</string>
+    <string name="taipei2">原始資料來源:台北市政府資料開放平台</string>
+    <string name="datataipei"><a href="http://data.taipei/opendata/datalist/datasetMeta?oid=119efc37-541b-4aca-a16a-7ba210aafa1f">
+        台北市垃圾清運點位資訊</a></string>
+
+    <string name="recycle"><a href="http://www.dep.gov.taipei/ct.asp?xItem=214521284&#038;ctNode=41074&#038;mp=110001">
+        資源回收分類方式</a></string>
+
+    <string name="yahoo"><a href="https://www.yahoo.com/news/weather/taiwan/taipei-city/taipei-city-55812231">
+        台北天氣資料來源</a></string>
+
     <string name="direction">說明</string>
     <string name="google_play_service_missing">裝置沒有安裝Google Play服務</string>
     <string name="search">Search</string>
@@ -64,5 +76,15 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="dirsearch">搜尋行政區方式:ex 內湖區東湖路..依序顯示地址 輸入查詢</string>
+    <string name="dirlocation">地圖定位-顯示垃圾車清運點位置</string>
+    <string name="dirdel">刪除記事資料:長壓記事資料列</string>
+    <string name="diredit">修改記事資料:點選記事資料列</string>
+    <string name="diralarm">記事資料可以自定提醒時間</string>
+    <string name="dirphoto">可以使用拍照來記錄記事</string>
+    <string name="dirtag">使用修改來設定標籤顏色</string>
+    <string name="diredittag">可從設定中指定新增記事資料的\n預設標籤顏色</string>
+    <string name="dirwidget">桌面小工具,可將記事資料新增到桌面上</string>
 
 </resources>
