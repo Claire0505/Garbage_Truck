@@ -13,19 +13,22 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 檢查網路狀態的權限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <!-- 網路定位的權限(不精準)
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    -->
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
+    <!-- GPS定位權限(精準) -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/transport"
+        android:icon="@mipmap/garbagetruck_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/garbagetruck_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -60,6 +63,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <!-- 所有垃圾資料地圖元件 -->
         <activity

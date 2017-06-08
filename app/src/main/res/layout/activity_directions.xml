@@ -223,7 +223,7 @@
 
             <TextView
                 android:textColor="#000000"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:gravity="center_vertical"
@@ -233,7 +233,7 @@
                 android:paddingBottom="4dp"/>
             <TextView
                 android:textColor="#000000"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:gravity="center_vertical"

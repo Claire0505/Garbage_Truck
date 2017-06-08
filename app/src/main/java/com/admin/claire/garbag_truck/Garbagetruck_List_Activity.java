@@ -11,12 +11,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -116,7 +118,7 @@ public class Garbagetruck_List_Activity extends FragmentActivity
                 .position(garbage)
                 .title(title)
                 .snippet(content)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.garbagetruck)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.garbagetruck1)));
 
 
         //建立位置的座標物件
@@ -132,7 +134,7 @@ public class Garbagetruck_List_Activity extends FragmentActivity
         CameraPosition cameraPosition =
                 new CameraPosition.Builder()
                         .target(place)
-                        .zoom(17)
+                        .zoom(16)
                         .build();
 
         // 使用動畫的效果移動地圖
@@ -211,7 +213,7 @@ public class Garbagetruck_List_Activity extends FragmentActivity
 
            //畫出兩點間的線條
             PolylineOptions polylineOpt = new PolylineOptions()
-                    .width(15)
+                    .width(10)
                     .color(Color.BLUE);
             ArrayList<LatLng> listLatLng = new ArrayList<LatLng>();
             listLatLng.add(new LatLng(location.getLatitude(), location.getLongitude()));
@@ -368,6 +370,13 @@ public class Garbagetruck_List_Activity extends FragmentActivity
             //二次定位之間的最大距離，單位是公尺
             locationRequest.setSmallestDisplacement(5);
 
+            //判斷使用者是否啟用了GPS定位
+            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            {
+                Toast.makeText(this, "尚未開啟定位服務，請檢查定位服務是否有開啟",
+                        Toast.LENGTH_SHORT).show();
+            }
+
             //啟動定位，如果GPS功能有開啟，優先使用GPS定位，否則使用網路定位
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -416,6 +425,7 @@ public class Garbagetruck_List_Activity extends FragmentActivity
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
 
 }
 

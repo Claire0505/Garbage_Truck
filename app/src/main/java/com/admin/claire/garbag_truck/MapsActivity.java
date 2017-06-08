@@ -3,10 +3,12 @@ package com.admin.claire.garbag_truck;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -169,7 +171,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .position(new LatLng(o.getDouble("lat"), o.getDouble("lng")))
                         .title(o.getString("title"))
                         .snippet(o.getString("content"))
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.garbagetruck))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.garbagetruck1))
                 );
 
             }
@@ -357,6 +359,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             locationRequest.setInterval(5000);
             //二次定位之間的最大距離，單位是公尺
             locationRequest.setSmallestDisplacement(5);
+
+            //判斷使用者是否啟用了GPS定位
+            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            {
+                new AlertDialog.Builder(MapsActivity.this).setTitle("地圖工具")
+                        .setMessage("您尚未開啟定位服務，要前往設定頁面啟動定位服務嗎？")
+                        .setCancelable(false).setPositiveButton("OK",
+                        new DialogInterface.OnClickListener()
+                {
+
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        Toast.makeText(MapsActivity.this, "未開啟定位服務，無法使用!!", Toast.LENGTH_SHORT).show();
+                    }
+                }).show();
+
+            }
 
             //啟動定位，如果GPS功能有開啟，優先使用GPS定位，否則使用網路定位
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
