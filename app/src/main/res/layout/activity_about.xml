@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="@drawable/background"
     tools:context="com.admin.claire.garbag_truck.drawerlayout.AboutActivity">
 
 
@@ -22,7 +21,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="3dp"
-            android:background="@drawable/circle_button"
+            android:padding="3dp"
             app:srcCompat="@drawable/transport"
             android:contentDescription="@string/about"/>
 
@@ -69,7 +68,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="3dp"
-            android:background="@drawable/circle_button"
+            android:padding="3dp"
             app:srcCompat="@drawable/transport"
             android:contentDescription="@string/about"/>
 
@@ -115,7 +114,6 @@
             android:layout_height="50dp"
             android:padding="10dp"
             android:layout_margin="3dp"
-            android:background="@drawable/circle_button"
             app:srcCompat="@drawable/recycle"
             android:contentDescription="@string/about"/>
 
@@ -143,7 +141,6 @@
             android:padding="11dp"
             android:layout_margin="3dp"
             app:srcCompat="@drawable/yahoo"
-            android:background="@drawable/circle_button"
             android:contentDescription="@string/about" />
 
         <TextView

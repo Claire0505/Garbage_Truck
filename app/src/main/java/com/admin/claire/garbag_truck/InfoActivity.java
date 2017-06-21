@@ -1,11 +1,17 @@
 package com.admin.claire.garbag_truck;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREFS_NAME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_DARK_THEME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PINK_THEME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PURPLE_THEME;
 
 public class InfoActivity extends AppCompatActivity {
 
@@ -25,6 +31,7 @@ public class InfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 

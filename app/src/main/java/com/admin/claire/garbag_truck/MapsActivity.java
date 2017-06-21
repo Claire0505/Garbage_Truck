@@ -4,6 +4,7 @@ package com.admin.claire.garbag_truck;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -49,6 +50,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.Delayed;
 
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREFS_NAME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_DARK_THEME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PINK_THEME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PURPLE_THEME;
+
 // 使用Google API用戶端，讓地圖元件類別實作需要的介面， GoogleApiClient
 // 分別是在「com.google.android.gms.maps」套件下的ConnectionCallbacks與OnConnectionFailedListener
 //接收位置更新資訊，需要在地圖顯示目前的位置，讓地圖元件類別實作需要的介面com.google.android.gms.location.LocationListener
@@ -81,6 +87,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Use the chosen theme
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
+        boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
+        boolean usePinkTheme = preferences.getBoolean(PREF_PINK_THEME, false);
+        boolean usePurpleTheme = preferences.getBoolean(PREF_PURPLE_THEME, false);
+        if (useDarkTheme){
+            setTheme(R.style.CustomerTheme_Black);
+        }else if (usePinkTheme){
+            setTheme(R.style.CustomerTheme_Pink);
+        }else if (usePurpleTheme) {
+            setTheme(R.style.CustomerTheme_Purple);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.

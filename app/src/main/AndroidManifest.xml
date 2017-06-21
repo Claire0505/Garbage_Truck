@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.admin.claire.garbag_truck">
+    package="com.admin.claire.garbag_truck"
+    android:versionCode="2"
+    android:versionName="1.1">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 需要攝錄鏡頭設備 -->
@@ -13,7 +15,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 檢查網路狀態的權限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 網路定位的權限(不精準)
+    <!--
+    網路定位的權限(不精準)
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     -->
     <!--
@@ -30,7 +33,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/garbagetruck_icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/CustomerTheme_Blue">
         <meta-data
             android:name="android.app.searchable"
             android:resource="@xml/searchable" />
@@ -63,7 +66,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -99,6 +101,7 @@
         <!-- Info項目元件 使用Dialog方式呈現 -->
         <activity
             android:name=".InfoActivity"
+            android:label="@string/app_name"
             android:theme="@style/Dialog" />
 
         <!-- 選擇顏色項目元件 使用Dialog 方式呈現 -->
@@ -116,7 +119,10 @@
         </activity>
 
         <!-- 設定元件 Preference -->
-        <activity android:name=".preference.PrefActivity" />
+        <activity
+            android:name=".preference.PrefActivity"
+            android:label="@string/tag"
+            android:theme="@style/DialogColor" />
 
         <!-- 檢視照片元件 -->
         <activity android:name=".PictureActivity" />
@@ -157,13 +163,17 @@
         <activity
             android:name=".drawerlayout.AboutActivity"
             android:label="@string/about"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".drawerlayout.DirectionsActivity"
             android:label="@string/direction"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".preference.ThemeToggle"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

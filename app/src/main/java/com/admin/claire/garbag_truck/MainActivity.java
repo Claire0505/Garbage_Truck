@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -41,6 +42,7 @@ import com.admin.claire.garbag_truck.database.NotesItemDAO;
 import com.admin.claire.garbag_truck.drawerlayout.AboutActivity;
 import com.admin.claire.garbag_truck.drawerlayout.DirectionsActivity;
 import com.admin.claire.garbag_truck.preference.PrefActivity;
+import com.admin.claire.garbag_truck.preference.ThemeToggle;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -55,9 +57,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREFS_NAME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_DARK_THEME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PINK_THEME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PURPLE_THEME;
+
 public class MainActivity extends AppCompatActivity {
 
-    private LinearLayout settings_Layout, about_Layout, direction_Layout;
+    private LinearLayout tag_Layout,settings_Layout, about_Layout, direction_Layout;
     private Snackbar snackbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -91,6 +98,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Use the chosen theme
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
+        boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
+        boolean usePinkTheme = preferences.getBoolean(PREF_PINK_THEME, false);
+        boolean usePurpleTheme = preferences.getBoolean(PREF_PURPLE_THEME, false);
+        if (useDarkTheme){
+            setTheme(R.style.CustomerTheme_Black);
+        }else if (usePinkTheme){
+            setTheme(R.style.CustomerTheme_Pink);
+        }else if (usePurpleTheme) {
+            setTheme(R.style.CustomerTheme_Purple);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -528,6 +548,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         settings_Layout = (LinearLayout)findViewById(R.id.setting_layout);
+        tag_Layout = (LinearLayout)findViewById(R.id.tag_layout);
         about_Layout = (LinearLayout)findViewById(R.id.about_layout);
         direction_Layout = (LinearLayout)findViewById(R.id.direction_layout);
 
@@ -586,6 +607,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void initLayout() {
         settings_Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ThemeToggle.class));
+                mDrawerLayout.closeDrawers();
+
+            }
+        });
+        tag_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 啟動設定元件

@@ -11,12 +11,30 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREFS_NAME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_DARK_THEME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PINK_THEME;
+import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PURPLE_THEME;
+
 public class ColorActivity extends AppCompatActivity {
 
     private LinearLayout color_gallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Use the chosen theme
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
+        boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
+        boolean usePinkTheme = preferences.getBoolean(PREF_PINK_THEME, false);
+        boolean usePurpleTheme = preferences.getBoolean(PREF_PURPLE_THEME, false);
+        if (useDarkTheme){
+            setTheme(R.style.CustomerTheme_Black);
+        }else if (usePinkTheme){
+            setTheme(R.style.CustomerTheme_Pink);
+        }else if (usePurpleTheme) {
+            setTheme(R.style.CustomerTheme_Purple);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color);
 

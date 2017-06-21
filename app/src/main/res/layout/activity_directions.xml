@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="@drawable/background"
     tools:context="com.admin.claire.garbag_truck.drawerlayout.DirectionsActivity"
     android:weightSum="1">
 
@@ -23,7 +22,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="3dp"
-            android:background="@drawable/circle_button"
+            android:padding="3dp"
             app:srcCompat="@drawable/transport"
             android:contentDescription="@string/about"/>
 
@@ -56,7 +55,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="3dp"
-            android:background="@drawable/circle_button"
+            android:padding="3dp"
             app:srcCompat="@drawable/ic_location_on_black_36dp"
             android:contentDescription="@string/about"/>
 
@@ -91,7 +90,7 @@
             android:layout_height="50dp"
             android:layout_margin="3dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/circle_button"
+            android:padding="3dp"
             app:srcCompat="@drawable/notes"
             android:contentDescription="@string/about"/>
 
@@ -138,7 +137,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="3dp"
-            android:background="@drawable/circle_button"
+            android:padding="3dp"
             app:srcCompat="@drawable/ic_alarm_on_black_36dp"
             android:contentDescription="@string/about"/>
 
@@ -172,7 +171,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="3dp"
-            android:background="@drawable/circle_button"
+            android:padding="3dp"
             app:srcCompat="@drawable/ic_add_a_photo_black_36dp"
             android:contentDescription="@string/about"/>
 
@@ -211,7 +210,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="3dp"
-            android:background="@drawable/circle_button"
+            android:padding="3dp"
             app:srcCompat="@drawable/ic_bookmark_black_36dp"
             android:contentDescription="@string/about"/>
 
@@ -255,7 +254,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="3dp"
-            android:background="@drawable/circle_button"
+            android:padding="3dp"
             app:srcCompat="@drawable/ic_now_widgets"
             android:contentDescription="@string/about"/>
 

@@ -5,10 +5,26 @@
     <color name="colorAccent">#4fc4e7</color>
 
     <color name="bule">#3d7ae2</color>
-    <color name="gray">#3d3838</color>
-    <color name="purple">#AA66CC</color>
+    <color name="gray">#2d2929</color>
+    <color name="purple">#aa66cc</color>
     <color name="green">#99CC00</color>
     <color name="orange">#FFBB33</color>
     <color name="red">#FF4444</color>
+
+    <color name="dark">#252525</color>
+    <color name="black_dark">#000000</color>
+    <color name="blue_dark">#4aa9fc</color>
+    <color name="blue_primary">#3997e9</color>
+    <color name="blue1">#60aaea</color>
+    <!-- Theme Pink -->
+    <color name="background">#e17096</color>
+    <color name="header">#ed6e99</color>
+    <color name="customercolorAccent">#f04680</color>
+    <color name="purple1">#8156cd</color>
+    <color name="purple_dark">#54348e</color>
+    <color name="background_purple">#6938bd</color>
+    <color name="light_purple">#5707e7</color>
+    <color name="background_black">#4f4e50</color>
+    <color name="dialog">#fe88a8e7</color>
 
 </resources>
