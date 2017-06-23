@@ -2,6 +2,7 @@ package com.admin.claire.garbag_truck;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +22,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -48,6 +50,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +62,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static android.R.attr.name;
 import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREFS_NAME;
 import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_DARK_THEME;
 import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PINK_THEME;
@@ -96,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
     // 宣告資料庫功能類別欄位變數
     private NotesItemDAO notesItemDAO;
 
+    public static GoogleAnalytics analytics;
+    public static Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Use the chosen theme
@@ -113,10 +122,14 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Log.e(TAG, "onCreate: " );
 
         getData();
         initView();
         initLayout();
+        //GoogleAnalytics
+        analytics = GoogleAnalytics.getInstance(this);
+        mTracker = analytics.newTracker("UA-101542959-1");
 
         // 建立資料庫物件
         notesItemDAO = new NotesItemDAO(getApplicationContext());
@@ -137,10 +150,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         // 取得所有記事資料
         notesItems = notesItemDAO.getAll();
         notesItemAdapter = new NotesItemAdapter(this, R.layout.singleitem, notesItems);
         mListNote.setAdapter(notesItemAdapter);
+        //Log.e(TAG, "onResume: " );
     }
 
     @Override
@@ -216,6 +231,12 @@ public class MainActivity extends AppCompatActivity {
                 // 第四個參數在這裡沒有用途
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //GoogleAnalyticsButtonClick
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("NoteEdit")
+                    .build());
+
             // 讀取選擇的記事物件
             NotesItem notesItem = notesItemAdapter.getItem(position);
             // 使用Action名稱建立啟動另一個Activity元件需要的Intent物件
@@ -249,6 +270,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view,
                                        int position, long id) {
+
+            //GoogleAnalyticsButtonClick
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("NoteDelete")
+                    .build());
             // 讀取選擇的記事物件
             NotesItem notesItem = notesItemAdapter.getItem(position);
             // 處理是否顯示已選擇項目
@@ -284,6 +311,11 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener mGarbageImgListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //GoogleAnalyticsButtonClick
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("GarbageListDetail")
+                    .build());
             netWork(v);
             //onClick時的動畫旋轉效果
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
@@ -296,6 +328,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
            // netWork(v);
+            //GoogleAnalyticsButtonClick
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("MapLocation")
+                    .build());
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
             startActivity(new Intent(MainActivity.this, MapsActivity.class));
         }
@@ -305,9 +342,12 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener mNoteImgListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            //GoogleAnalyticsButtonClick
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("Note")
+                    .build());
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
-
             // 使用Action名稱建立啟動另一個Activity元件需要的Intent物件
             Intent intent = new Intent("com.admin.claire.garbag_truck.ADD_ITEM");
             // 呼叫「startActivityForResult」，，第二個參數「0」表示執行新增
@@ -318,6 +358,11 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener mInfoImgListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //GoogleAnalyticsButtonClick
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Action")
+                    .setAction("Info")
+                    .build());
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
             startActivity(new Intent(MainActivity.this, InfoActivity.class));
 
@@ -451,6 +496,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         if (mActionBarDrawerToggle.onOptionsItemSelected(item)){
             return true;
         }
@@ -609,6 +655,11 @@ public class MainActivity extends AppCompatActivity {
         settings_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //GoogleAnalyticsButtonClick
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Setting")
+                        .build());
                 startActivity(new Intent(MainActivity.this, ThemeToggle.class));
                 mDrawerLayout.closeDrawers();
 
@@ -617,6 +668,11 @@ public class MainActivity extends AppCompatActivity {
         tag_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //GoogleAnalyticsButtonClick
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("ColorTag")
+                        .build());
                 // 啟動設定元件
                 startActivity(new Intent(MainActivity.this, PrefActivity.class));
                 mDrawerLayout.closeDrawers();
@@ -625,6 +681,11 @@ public class MainActivity extends AppCompatActivity {
         about_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //GoogleAnalyticsButtonClick
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("About")
+                        .build());
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 mDrawerLayout.closeDrawers();
             }
@@ -632,13 +693,59 @@ public class MainActivity extends AppCompatActivity {
         direction_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //GoogleAnalyticsButtonClick
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("direction")
+                        .build());
                 startActivity(new Intent(MainActivity.this, DirectionsActivity.class));
                 mDrawerLayout.closeDrawers();
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setTitle("關閉應用程式")
+                .setMessage("確定要離開應用程式?")
+                .setPositiveButton("確定", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //後退按鈕中關閉整個應用程序 //啟動HomeScreen
+                        Intent a = new Intent(Intent.ACTION_MAIN);
+                        a.addCategory(Intent.CATEGORY_HOME);
+                        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(a);
+                    }
 
+                })
+                .setNegativeButton("取消", null)
+                .show();
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Log.e(TAG, "onPause: " );
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //finish();
+       // Log.e(TAG, "onStop: " );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+       // Log.e(TAG, "onDestroy: " );
+    }
 
 }

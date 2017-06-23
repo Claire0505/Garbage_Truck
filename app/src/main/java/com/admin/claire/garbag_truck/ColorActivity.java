@@ -22,18 +22,6 @@ public class ColorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Use the chosen theme
-        SharedPreferences preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
-        boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
-        boolean usePinkTheme = preferences.getBoolean(PREF_PINK_THEME, false);
-        boolean usePurpleTheme = preferences.getBoolean(PREF_PURPLE_THEME, false);
-        if (useDarkTheme){
-            setTheme(R.style.CustomerTheme_Black);
-        }else if (usePinkTheme){
-            setTheme(R.style.CustomerTheme_Pink);
-        }else if (usePurpleTheme) {
-            setTheme(R.style.CustomerTheme_Purple);
-        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color);

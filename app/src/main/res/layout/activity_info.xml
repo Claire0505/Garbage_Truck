@@ -27,7 +27,7 @@
     <Button
         android:id="@+id/btn_Info"
         android:text="@string/btn_ok"
-        android:background="#812b8ade"
+        android:background="#60080808"
         android:textColor="#ffffff"
         android:textSize="18sp"
         android:layout_width="match_parent"

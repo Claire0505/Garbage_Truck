@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
-        android:textColor="#fe27e6e6"
+        android:textColor="#000000"
         android:textSize="16sp"
         android:text="" />
 
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
-        android:textColor="#cc255f"
+        android:textColor="#000000"
         android:text=""/>
 
     <TextView
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
-        android:textColor="#d6301d"
+        android:textColor="#000000"
         android:text=""/>
 
     <LinearLayout
@@ -51,7 +51,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#cc255f"
+            android:textColor="#000000"
             android:text="" />
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#cc255f"
+            android:textColor="#000000"
             android:text="" />
 
     </LinearLayout>

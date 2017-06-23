@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -18,6 +19,7 @@ public class ThemeToggle extends AppCompatActivity {
     public static final String PREF_PINK_THEME = "pink_theme";
     public static final String PREF_PURPLE_THEME = "purple_theme";
     private Switch darkTheme, pinkTheme, purpleTheme;
+    private String TAG = "ThemeToggle: ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,9 @@ public class ThemeToggle extends AppCompatActivity {
 //        Intent intent = getIntent();
 //        finish();
 //        startActivity(intent);
+        //finish();
         startActivity(new Intent(ThemeToggle.this,MainActivity.class));
+
     }
 
     private void togglePinkTheme(boolean pinkTheme) {
@@ -99,7 +103,9 @@ public class ThemeToggle extends AppCompatActivity {
         editor.putBoolean(PREF_PINK_THEME, pinkTheme);
         editor.apply();
 
+        //finish();
         startActivity(new Intent(ThemeToggle.this,MainActivity.class));
+
     }
 
     private void togglePurpleTheme(boolean pinkTheme) {
@@ -108,6 +114,42 @@ public class ThemeToggle extends AppCompatActivity {
         editor.putBoolean(PREF_PURPLE_THEME, pinkTheme);
         editor.apply();
 
+        //finish();
         startActivity(new Intent(ThemeToggle.this,MainActivity.class));
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Use the chosen theme
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
+        boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
+        boolean usePinkTheme = preferences.getBoolean(PREF_PINK_THEME, false);
+        boolean usePurpleTheme = preferences.getBoolean(PREF_PURPLE_THEME, false);
+        if (useDarkTheme){
+            setTheme(R.style.CustomerTheme_Black);
+        }else if (usePinkTheme){
+            setTheme(R.style.CustomerTheme_Pink);
+        }else if (usePurpleTheme) {
+            setTheme(R.style.CustomerTheme_Purple);
+        }
+
+        //Log.e(TAG, "onResume: " );
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+       // Log.e(TAG, "onStop: " );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //finish();
+        //Log.e(TAG, "onDestroy: " );
+    }
+
 }

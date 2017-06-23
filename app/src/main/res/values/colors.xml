@@ -26,5 +26,6 @@
     <color name="light_purple">#5707e7</color>
     <color name="background_black">#4f4e50</color>
     <color name="dialog">#fe88a8e7</color>
+    <color name="dialog_black">#60080808</color>
 
 </resources>

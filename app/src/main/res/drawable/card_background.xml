@@ -6,7 +6,7 @@
         android:left="2dp"
         android:top="2dp">
         <shape>
-            <solid android:color="#535151" />
+            <solid android:color="#313131" />
             <corners android:radius="5dp" />
         </shape>
     </item>

@@ -13,8 +13,8 @@
         android:id="@+id/switchDark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#2674f7"
-        android:textSize="16sp"
+        android:textColor="#000000"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:text="@string/dark_theme" />
 
@@ -23,8 +23,8 @@
         android:id="@+id/switchPink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#2674f7"
-        android:textSize="16sp"
+        android:textColor="#000000"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:text="@string/pink_theme" />
 
@@ -33,8 +33,8 @@
         android:id="@+id/switchPurple"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#2674f7"
-        android:textSize="16sp"
+        android:textColor="#000000"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:text="@string/purple_theme" />
 </LinearLayout>
