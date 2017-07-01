@@ -36,6 +36,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.analytics.HitBuilders;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +46,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.admin.claire.garbag_truck.MainActivity.mTracker;
 import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREFS_NAME;
 import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_DARK_THEME;
 import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PINK_THEME;
@@ -87,6 +89,7 @@ public class ListViewActivity extends AppCompatActivity {
         lv = (ListView)findViewById(R.id.list);
         lv.setOnItemClickListener(onClickListView);
         getData();
+
 
     }
 
@@ -187,6 +190,11 @@ public class ListViewActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                //GoogleAnalyticsButtonClick
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("GarbageListQueryTextChange")
+                        .setAction("QueryTextChang: " + newText)
+                        .build());
 
                 //過濾列表資料
                 adapter.getFilter().filter("垃圾清運點：臺北市" + newText);
@@ -201,6 +209,12 @@ public class ListViewActivity extends AppCompatActivity {
     private AdapterView.OnItemClickListener onClickListView = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //GoogleAnalyticsButtonClick
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("GarbageListAction")
+                    .setAction("GarbageListDetail")
+                    .build());
+
             TextView text1 = (TextView)view.findViewById(R.id.title);
             TextView text2 = (TextView)view.findViewById(R.id.content);
             TextView text3 = (TextView)view.findViewById(R.id.lng);
@@ -224,5 +238,6 @@ public class ListViewActivity extends AppCompatActivity {
 
         }
     };
+
 
 }

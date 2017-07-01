@@ -11,9 +11,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -25,10 +27,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.admin.claire.garbag_truck.MainActivity.mTracker;
 import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREFS_NAME;
 import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_DARK_THEME;
 import static com.admin.claire.garbag_truck.preference.ThemeToggle.PREF_PINK_THEME;
@@ -40,6 +47,7 @@ public class NotesActivity extends AppCompatActivity {
     private EditText editContent;
     private ImageView btnOK, btnCancel;
     private ImageView imgAlarm, imgTakePhoto, imgSelectColor;
+    private TextView alarmTimeTxt;
 
     // 檔案名稱
     private String fileName;
@@ -94,10 +102,19 @@ public class NotesActivity extends AppCompatActivity {
 
             editTitle.setText(notesItem.getTitle());
             editContent.setText(notesItem.getContent());
+
+            if (notesItem.getAlarmDatetime() != 0){
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm EEE");
+                String str = df.format(notesItem.getAlarmDatetime());
+                //Log.e("ALARMEDIT", "onTimeSet: " + str );
+                alarmTimeTxt.setText("提醒:" + str);
+                alarmTimeTxt.getText();
+            }
         }
         // 新增記事
         else {
             notesItem = new NotesItem();
+            alarmTimeTxt.setText("");
         }
 
     }
@@ -149,6 +166,7 @@ public class NotesActivity extends AppCompatActivity {
         editContent = (EditText)findViewById(R.id.edit_Content);
         btnOK = (ImageView)findViewById(R.id.btn_Ok);
         btnCancel = (ImageView)findViewById(R.id.btn_Cancel);
+        alarmTimeTxt = (TextView)findViewById(R.id.alarmDateTime);
 
         imgAlarm = (ImageView)findViewById(R.id.imageAlarm);
         imgTakePhoto = (ImageView)findViewById(R.id.imageTakePhoto);
@@ -245,11 +263,11 @@ public class NotesActivity extends AppCompatActivity {
         }
 
         // 讀取年、月、日、時、分
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        final int minute = calendar.get(Calendar.MINUTE);
 
         // 儲存設定的提醒日期時間
         final Calendar alarm = Calendar.getInstance();
@@ -263,6 +281,10 @@ public class NotesActivity extends AppCompatActivity {
                 alarm.set(Calendar.MINUTE, minute);
                 notesItem.setAlarmDatetime(alarm.getTimeInMillis());
 
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm EEE");
+                String str = df.format(alarm.getTimeInMillis());
+                //Log.e("ALARM", "onTimeSet: " + str );
+                alarmTimeTxt.setText("設定提醒:" + str);
             }
 
         };
@@ -276,7 +298,7 @@ public class NotesActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 alarm.set(Calendar.YEAR, year);
-                alarm.set(Calendar.MINUTE, month);
+                alarm.set(Calendar.MONTH, month);
                 alarm.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                 //繼續選擇提醒時間
@@ -288,13 +310,17 @@ public class NotesActivity extends AppCompatActivity {
         final DatePickerDialog dpd = new DatePickerDialog(
                 this, dateSetListener, year, month, day);
         dpd.show();
-
     }
 
     //提醒功能
     private View.OnClickListener imgAlarmListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //GoogleAnalyticsButtonClick
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("AlarmNotesAction")
+                    .setAction("NotesAlarm")
+                    .build());
             v.startAnimation(AnimationUtils.loadAnimation(NotesActivity.this,R.anim.click_animation));
             // 設定提醒日期時間
             processSetAlarm();
@@ -305,6 +331,11 @@ public class NotesActivity extends AppCompatActivity {
     private View.OnClickListener imgSelectColorListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //GoogleAnalyticsButtonClick
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("ColorNotesAction")
+                    .setAction("NotesColor")
+                    .build());
             v.startAnimation(AnimationUtils.loadAnimation(NotesActivity.this,R.anim.click_animation));
 
             //啟動設定顏色的Activity元件
@@ -318,6 +349,11 @@ public class NotesActivity extends AppCompatActivity {
     private View.OnClickListener imgTakePhotoListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //GoogleAnalyticsButtonClick
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("TakePhotoAction")
+                    .setAction("TakePhoto")
+                    .build());
             v.startAnimation(AnimationUtils.loadAnimation(
                     NotesActivity.this,R.anim.click_animation));
 
@@ -333,9 +369,24 @@ public class NotesActivity extends AppCompatActivity {
 
         // 照片檔案名稱
         File pictureFile = configFileName("P", ".jpg");
-        Uri uri = Uri.fromFile(pictureFile);
-        // 設定檔案名稱
-        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        //Uri uri = Uri.fromFile(pictureFile);
+
+        // 如果裝置版本是7.0（包含）以上 判断是否是AndroidN以及更高的版本
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Uri uri = FileProvider.getUriForFile(NotesActivity.this,
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    pictureFile);
+            // 設定檔案名稱
+            intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            intentCamera.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION |
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        } else {
+            Uri uri = Uri.fromFile(pictureFile);
+            // 設定檔案名稱
+            intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        }
+
+
         // 啟動相機元件
         startActivityForResult(intentCamera, START_CAMERA);
     }

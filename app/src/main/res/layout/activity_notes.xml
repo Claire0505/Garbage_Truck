@@ -38,12 +38,23 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/alarmDateTime"
+        android:layout_margin="5dp"
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_title"
+        android:textColor="#eac01a"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:id="@+id/layoutImg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         android:layout_below="@+id/layout_title"
@@ -121,8 +132,8 @@
         android:contentDescription="@string/app_name"
         android:transitionName="picture"
         android:onClick="clickPicture"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/layout_btn"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

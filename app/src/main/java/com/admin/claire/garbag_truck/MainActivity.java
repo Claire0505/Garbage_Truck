@@ -233,8 +233,8 @@ public class MainActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //GoogleAnalyticsButtonClick
             mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("Action")
-                    .setAction("NoteEdit")
+                    .setCategory("NotesEditAction")
+                    .setAction("NotesEdit")
                     .build());
 
             // 讀取選擇的記事物件
@@ -273,8 +273,8 @@ public class MainActivity extends AppCompatActivity {
 
             //GoogleAnalyticsButtonClick
             mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("Action")
-                    .setAction("NoteDelete")
+                    .setCategory("DeleteNotesAction")
+                    .setAction("NotesDelete")
                     .build());
             // 讀取選擇的記事物件
             NotesItem notesItem = notesItemAdapter.getItem(position);
@@ -313,9 +313,10 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             //GoogleAnalyticsButtonClick
             mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("Action")
+                    .setCategory("GarbageTruckAction")
                     .setAction("GarbageListDetail")
                     .build());
+           //檢查網路連線
             netWork(v);
             //onClick時的動畫旋轉效果
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
@@ -330,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
            // netWork(v);
             //GoogleAnalyticsButtonClick
             mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("Action")
+                    .setCategory("MapAction")
                     .setAction("MapLocation")
                     .build());
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
@@ -344,8 +345,8 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             //GoogleAnalyticsButtonClick
             mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("Action")
-                    .setAction("Note")
+                    .setCategory("NotesAction")
+                    .setAction("Notes")
                     .build());
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
             // 使用Action名稱建立啟動另一個Activity元件需要的Intent物件
@@ -360,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             //GoogleAnalyticsButtonClick
             mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("Action")
+                    .setCategory("InfoAction")
                     .setAction("Info")
                     .build());
             v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,R.anim.click_animation));
@@ -657,7 +658,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //GoogleAnalyticsButtonClick
                 mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
+                        .setCategory("SettingAction")
                         .setAction("Setting")
                         .build());
                 startActivity(new Intent(MainActivity.this, ThemeToggle.class));
@@ -670,7 +671,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //GoogleAnalyticsButtonClick
                 mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
+                        .setCategory("ColorTagAction")
                         .setAction("ColorTag")
                         .build());
                 // 啟動設定元件
@@ -683,7 +684,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //GoogleAnalyticsButtonClick
                 mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
+                        .setCategory("AboutAction")
                         .setAction("About")
                         .build());
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
@@ -695,7 +696,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //GoogleAnalyticsButtonClick
                 mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
+                        .setCategory("DirectionAction")
                         .setAction("direction")
                         .build());
                 startActivity(new Intent(MainActivity.this, DirectionsActivity.class));

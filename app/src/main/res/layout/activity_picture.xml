@@ -4,7 +4,6 @@
     android:id="@+id/picture_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fe88a8e7"
     android:padding="4sp"
     android:layout_margin="4sp"
     android:transitionName="picture"

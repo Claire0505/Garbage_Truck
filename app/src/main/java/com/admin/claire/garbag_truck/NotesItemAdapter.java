@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -57,6 +58,7 @@ public class NotesItemAdapter extends ArrayAdapter<NotesItem> {
         ImageView selectedItem = (ImageView)itemView.findViewById(R.id.selected_item);
         TextView titleView = (TextView)itemView.findViewById(R.id.notesTitle_text);
         TextView dateView = (TextView)itemView.findViewById(R.id.date_text);
+        TextView notifyView = (TextView)itemView.findViewById(R.id.notify_text);
 
         // 設定記事顏色
         GradientDrawable background = (GradientDrawable)typeColor.getBackground();
@@ -65,6 +67,15 @@ public class NotesItemAdapter extends ArrayAdapter<NotesItem> {
         // 設定標題與日期時間
         titleView.setText(item.getTitle());
         dateView.setText(item.getLocaleDateTime());
+
+        if (item.getAlarmDatetime() != 0){
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm EEE");
+            String str = df.format(item.getAlarmDatetime());
+            notifyView.setText("提醒:" + str);
+
+        } else {
+            notifyView.setText("");
+        }
 
         // 設定是否已選擇
         selectedItem.setVisibility(item.isSelected() ? View.VISIBLE : View.INVISIBLE);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.admin.claire.garbag_truck"
-    android:versionCode="3"
-    android:versionName="1.2">
+    android:versionCode="4"
+    android:versionName="1.3">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 需要攝錄鏡頭設備 -->
@@ -37,6 +37,18 @@
         <meta-data
             android:name="android.app.searchable"
             android:resource="@xml/searchable" />
+
+        <!--裝置版本是7.0（包含）以上-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.admin.claire.garbag_truck.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+        <!--裝置版本是7.0（包含）以上-->
 
         <activity
             android:name=".MainActivity"

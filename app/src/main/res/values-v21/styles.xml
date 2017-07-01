@@ -14,7 +14,7 @@
         <item name="android:colorBackground">@color/background_black</item>
         <item name="colorPrimary">@color/gray</item>
         <item name="colorPrimaryDark">@color/black_dark</item>
-        <item name="colorAccent">@color/blue_dark</item>
+        <item name="colorAccent">@color/gray</item>
         <item name="android:textColorPrimary">@android:color/black</item>
         <item name="android:statusBarColor">@color/dark</item>
         <item name="android:navigationBarColor">@color/gray</item>
@@ -26,14 +26,15 @@
         <item name="colorPrimaryDark">@color/header</item>
         <item name="colorAccent">@color/customercolorAccent</item>
         <item name="android:navigationBarColor">@color/customercolorAccent</item>
+        <item name="android:statusBarColor">@color/customerStatusBar</item>
     </style>
 
     <style name="CustomerTheme_Purple" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/purple1</item>
+        <item name="colorPrimary">@color/purple2</item>
         <item name="colorPrimaryDark">@color/purple_dark</item>
         <item name="android:colorBackground">@color/purple</item>
         <item name="colorAccent">@color/light_purple</item>
-        <item name="android:navigationBarColor">@color/purple1</item>
-        <item name="android:statusBarColor">@color/purple</item>
+        <item name="android:navigationBarColor">@color/purple2</item>
+        <item name="android:statusBarColor">@color/purple1</item>
     </style>
 </resources>

@@ -54,14 +54,33 @@
                 android:textSize="16sp"
                 android:paddingBottom="2dp"/>
 
-            <!-- 日期時間 -->
-            <TextView
-                android:id="@+id/date_text"
-                android:paddingTop="2dp"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="" />
+                android:layout_height="wrap_content">
+
+                <!-- 日期時間 -->
+                <TextView
+                    android:id="@+id/date_text"
+                    android:paddingTop="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="" />
+
+                <!-- 日期時間 -->
+                <TextView
+                    android:id="@+id/notify_text"
+                    android:paddingTop="2dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="#f50746" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
