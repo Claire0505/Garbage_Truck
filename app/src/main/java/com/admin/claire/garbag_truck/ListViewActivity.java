@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -169,7 +170,7 @@ public class ListViewActivity extends AppCompatActivity {
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
         SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-        // final SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
+        //final SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         // 這邊讓icon可以還原到搜尋的icon
@@ -190,19 +191,24 @@ public class ListViewActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //GoogleAnalyticsButtonClick
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("GarbageListQueryTextChange")
-                        .setAction("QueryTextChang: " + newText)
-                        .build());
+                   //GoogleAnalyticsButtonClick
+                   mTracker.send(new HitBuilders.EventBuilder()
+                           .setCategory("GarbageListQueryTextChange")
+                           .setAction("QueryTextChang: " + newText)
+                           .build());
 
-                //過濾列表資料
-                adapter.getFilter().filter("垃圾清運點：臺北市" + newText);
-
+                   //過濾列表資料
+                  // adapter.getFilter().filter("垃圾清運點：臺北市" + newText);
+                if (TextUtils.isEmpty(newText)){
+                    adapter.getFilter().filter("");
+                    Log.i(TAG, "onQueryTextChange: Empty String");
+                    lv.clearTextFilter();
+                }else {
+                    adapter.getFilter().filter("垃圾清運點：臺北市" + newText);
+                }
                 return true;
             }
         });
-
         return super.onCreateOptionsMenu(menu);
     }
 
