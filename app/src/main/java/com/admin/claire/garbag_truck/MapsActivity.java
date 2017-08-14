@@ -20,6 +20,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -81,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //臺北市垃圾清運點位資訊
     private final String TRASH_TPE = "http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=aa9c657c-ea6f-4062-a645-b6c973d45564";
     private final String TRASH_TPE1 = "https://www.dropbox.com/s/f3yb3rvny6pwrj8/opendata_trash.json?dl=1";
-
+    String TPE_GarbageTruckURL = "https://www.dropbox.com/s/sw3y44evwmywtzz/opendata_trash.txt?dl=1";
     private String TAG = "JSON_TRASH";
 
 
@@ -156,12 +157,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void getData() {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                TRASH_TPE1,
+        Utf8JsonRequest jsonObjectRequest = new Utf8JsonRequest(Request.Method.GET,
+                TPE_GarbageTruckURL,null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG, "onResponse: " + response.toString());
+                        //Log.d(TAG, "onResponse: " + response.toString());
                         parserJson(response);
                     }
                 },

@@ -31,11 +31,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.analytics.HitBuilders;
 
@@ -60,6 +61,7 @@ public class ListViewActivity extends AppCompatActivity {
     //臺北市垃圾清運點位資訊
     private final String TPETrashURL = "http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=aa9c657c-ea6f-4062-a645-b6c973d45564";
     private final String TPETrashURL1 = "https://www.dropbox.com/s/f3yb3rvny6pwrj8/opendata_trash.json?dl=1";
+    String TPE_GarbageTruckURL = "https://www.dropbox.com/s/sw3y44evwmywtzz/opendata_trash.txt?dl=1";
     ArrayList<HashMap<String, String>> garbagetrucklist;
 
     //private ListAdapter adapter;
@@ -91,18 +93,17 @@ public class ListViewActivity extends AppCompatActivity {
         lv.setOnItemClickListener(onClickListView);
         getData();
 
-
     }
 
     private void getData(){
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                TPETrashURL1,
+        //覆寫JsonObjectRequest將編碼轉成UTF8，必免亂碼
+        Utf8JsonRequest jsonObjectRequest = new Utf8JsonRequest(
+                Request.Method.GET,TPE_GarbageTruckURL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                       // Log.e(TAG, "onResponse: " + response.toString() );
+                        //Log.e(TAG, "onResponse: " + response.toString() );
                         parserJson(response);
-
                         adapter = new SimpleAdapter(
                                 ListViewActivity.this,
                                 garbagetrucklist,
@@ -111,7 +112,6 @@ public class ListViewActivity extends AppCompatActivity {
                                 new int[]{R.id.title, R.id.content, R.id.lng, R.id.lat});
                         lv.setAdapter(adapter);
                         lv.setTextFilterEnabled(true);
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -121,8 +121,38 @@ public class ListViewActivity extends AppCompatActivity {
                         Toast.makeText(ListViewActivity.this,error.toString(),
                                 Toast.LENGTH_SHORT).show();
                     }
-                }
-        );
+                });
+
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+//                TPETrashURL1,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                       // Log.e(TAG, "onResponse: " + response.toString() );
+//                        parserJson(response);
+//
+//                        adapter = new SimpleAdapter(
+//                                ListViewActivity.this,
+//                                garbagetrucklist,
+//                                R.layout.list_item_card,
+//                                new String[]{"title","content","lng","lat"},
+//                                new int[]{R.id.title, R.id.content, R.id.lng, R.id.lat});
+//                        lv.setAdapter(adapter);
+//                        lv.setTextFilterEnabled(true);
+//
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Log.e(TAG, "onErrorResponse: " + error.toString() );
+//                        Toast.makeText(ListViewActivity.this,error.toString(),
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//        );
+
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjectRequest);
 
@@ -180,7 +210,7 @@ public class ListViewActivity extends AppCompatActivity {
         searchView.setFocusable(false);
         searchView.requestFocusFromTouch();      //要點選後才會開啟鍵盤輸入
         searchView.setSubmitButtonEnabled(false);//輸入框後是否要加上送出的按鈕
-        searchView.setQueryHint("輸入行政區查詢: 內湖區..."); //輸入框沒有值時要顯示的提示文字
+        searchView.setQueryHint("輸入行政區查詢:內湖區...."); //輸入框沒有值時要顯示的提示文字
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -201,7 +231,7 @@ public class ListViewActivity extends AppCompatActivity {
                   // adapter.getFilter().filter("垃圾清運點：臺北市" + newText);
                 if (TextUtils.isEmpty(newText)){
                     adapter.getFilter().filter("");
-                    Log.i(TAG, "onQueryTextChange: Empty String");
+                   // Log.i(TAG, "onQueryTextChange: Empty String");
                     lv.clearTextFilter();
                 }else {
                     adapter.getFilter().filter("垃圾清運點：臺北市" + newText);
