@@ -1,4 +1,9 @@
 <resources>
+    <!--加入要播的廣告 AdUnitID，這個 ID 是 Google 提供給我們測試用的-->
+    <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-1359696590212231/1423237746</string>
+
     <string name="app_name">台北市垃圾車</string>
     <string name="notebook">記事本</string>
     <string name="tag">標籤顏色</string>

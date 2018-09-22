@@ -123,8 +123,11 @@ public class Garbagetruck_List_Activity extends FragmentActivity
 
         mTilte.setText(title);
         mContent.setText(content);
-        mLng.setText(getResources().getString(R.string.lng)+ lng);
-        mLat.setText(getResources().getString(R.string.lat)+ lat);
+        String strLng = lng.substring(0, lng.indexOf(".") + 6);
+        String strLat = lat.substring(0, lng.indexOf(".") + 6);
+
+        mLng.setText(getResources().getString(R.string.lng)+ strLng);
+        mLat.setText(getResources().getString(R.string.lat)+ strLat);
 
         Double lngD  = Double.valueOf(lng);
         Double latD = Double.valueOf(lat);

@@ -27,6 +27,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 
@@ -64,6 +67,9 @@ public class NotesActivity extends AppCompatActivity {
     // 記事物件
     NotesItem notesItem;
 
+    // 增加廣告
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Use the chosen theme
@@ -82,9 +88,12 @@ public class NotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
-        //啟用<- up按鈕
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        // 增加廣告
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mAdView.loadAd(adRequest);
 
         initView();
         initHandler();

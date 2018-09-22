@@ -52,6 +52,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -107,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
     public static GoogleAnalytics analytics;
     public static Tracker mTracker;
 
+    // 增加廣告
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Use the chosen theme
@@ -124,7 +130,13 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Log.e(TAG, "onCreate: " );
+
+        // 增加廣告
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mAdView.loadAd(adRequest);
 
         getData();
         initView();

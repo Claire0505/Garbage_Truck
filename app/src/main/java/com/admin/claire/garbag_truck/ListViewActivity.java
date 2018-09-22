@@ -38,6 +38,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.HitBuilders;
 
 import org.json.JSONArray;
@@ -68,6 +70,10 @@ public class ListViewActivity extends AppCompatActivity {
     private SimpleAdapter adapter;
     private String TAG = "JSON_TRASH";
 
+    // 增加廣告
+    private AdView mAdView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Use the chosen theme
@@ -85,13 +91,21 @@ public class ListViewActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
-        //啟用<- up按鈕
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // 增加廣告
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mAdView.loadAd(adRequest);
 
         lv = (ListView)findViewById(R.id.list);
         lv.setOnItemClickListener(onClickListView);
         getData();
+
+        View parentLayout = findViewById(android.R.id.content);
+        Snackbar.make(parentLayout, "請輸入行政區查詢", Snackbar.LENGTH_LONG)
+                .show();
 
     }
 
@@ -197,11 +211,11 @@ public class ListViewActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_main, menu);
 
         final MenuItem searchItem = menu.findItem(R.id.search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
 
         SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
         //final SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager != null ? searchManager.getSearchableInfo(getComponentName()) : null);
 
         // 這邊讓icon可以還原到搜尋的icon
         searchView.setIconifiedByDefault(true);
@@ -211,7 +225,6 @@ public class ListViewActivity extends AppCompatActivity {
         searchView.requestFocusFromTouch();      //要點選後才會開啟鍵盤輸入
         searchView.setSubmitButtonEnabled(false);//輸入框後是否要加上送出的按鈕
         searchView.setQueryHint("輸入行政區查詢:內湖區...."); //輸入框沒有值時要顯示的提示文字
-
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -228,6 +241,7 @@ public class ListViewActivity extends AppCompatActivity {
                            .build());
 
                    //過濾列表資料
+
                   // adapter.getFilter().filter("垃圾清運點：臺北市" + newText);
                 if (TextUtils.isEmpty(newText)){
                     adapter.getFilter().filter("");
@@ -235,6 +249,7 @@ public class ListViewActivity extends AppCompatActivity {
                     lv.clearTextFilter();
                 }else {
                     adapter.getFilter().filter("垃圾清運點：臺北市" + newText);
+
                 }
                 return true;
             }
