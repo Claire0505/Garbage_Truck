@@ -84,7 +84,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //臺北市垃圾清運點位資訊
     private final String TRASH_TPE = "http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=aa9c657c-ea6f-4062-a645-b6c973d45564";
     private final String TRASH_TPE1 = "https://www.dropbox.com/s/f3yb3rvny6pwrj8/opendata_trash.json?dl=1";
-    String TPE_GarbageTruckURL = "https://www.dropbox.com/s/sw3y44evwmywtzz/opendata_trash.txt?dl=1";
+    //String TPE_GarbageTruckURL = "https://www.dropbox.com/s/sw3y44evwmywtzz/opendata_trash.txt?dl=1";
+    String TPE_GarbageTruckURL = "https://www.dropbox.com/s/frwxakmnd9xziax/opendata_trash20181012.txt?dl=1";
+
     private String TAG = "JSON_TRASH";
 
     // 增加廣告
@@ -174,14 +176,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //Log.d(TAG, "onResponse: " + response.toString());
+                        Log.d(TAG, "onResponse: " + response.toString());
                         parserJson(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, "onErrorResponse: " + error.toString());
+                        //Log.e(TAG, "onErrorResponse: " + error.toString());
 
                         Toast.makeText(MapsActivity.this, error.toString(),
                                 Toast.LENGTH_SHORT).show();
@@ -200,9 +202,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             for (int i = 0; i < data.length(); i++) {
                 JSONObject o = data.getJSONObject(i);
                 mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(o.getDouble("lat"), o.getDouble("lng")))
-                        .title(o.getString("title"))
-                        .snippet(o.getString("content"))
+                        .position(new LatLng(o.getDouble("Lat"), o.getDouble("Lng")))
+                        .title(o.getString("Title"))
+                        .snippet(o.getString("Content"))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.garbagetruck1))
                 );
 

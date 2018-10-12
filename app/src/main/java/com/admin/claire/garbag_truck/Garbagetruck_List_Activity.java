@@ -116,10 +116,10 @@ public class Garbagetruck_List_Activity extends FragmentActivity
         mLat = (TextView)findViewById(R.id.lat_Text);
         //取得傳遞過來的資料
         Intent intent = this.getIntent();
-        String title = intent.getStringExtra("title");
-        String content = intent.getStringExtra("content");
-        String lng = intent.getStringExtra("lng");
-        String lat = intent.getStringExtra("lat");
+        String title = intent.getStringExtra("Title");
+        String content = intent.getStringExtra("Content");
+        String lng = intent.getStringExtra("Lng");
+        String lat = intent.getStringExtra("Lat");
 
         mTilte.setText(title);
         mContent.setText(content);
@@ -228,8 +228,8 @@ public class Garbagetruck_List_Activity extends FragmentActivity
             mLat = (TextView)findViewById(R.id.lat_Text);
             //取得傳遞過來的資料
             Intent intent = this.getIntent();
-            String lng = intent.getStringExtra("lng");
-            String lat = intent.getStringExtra("lat");
+            String lng = intent.getStringExtra("Lng");
+            String lat = intent.getStringExtra("Lat");
             Double lngD  = Double.valueOf(lng);
             Double latD = Double.valueOf(lat);
 

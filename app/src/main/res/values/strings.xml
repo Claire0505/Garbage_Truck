@@ -1,0 +1,99 @@
+<resources>
+    <!--加入要播的廣告 AdUnitID，這個 ID 是 Google 提供給我們測試用的-->
+    <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-1359696590212231/1423237746</string>
+
+    <string name="app_name">台北市垃圾車</string>
+    <string name="notebook">記事本</string>
+    <string name="tag">標籤顏色</string>
+    <string name="about">關於</string>
+    <string name="version">version 1.5</string>
+    <string name="taipei">原始資料來源:</string>
+    <string name="taipei2">原始資料來源:台北市政府資料開放平台</string>
+    <string name="datataipei"><a href="http://data.taipei/opendata/datalist/datasetMeta?oid=119efc37-541b-4aca-a16a-7ba210aafa1f">
+        台北市垃圾清運點位資訊</a></string>
+
+    <string name="recycle"><a href="http://www.dep.gov.taipei/ct.asp?xItem=214521284&#038;ctNode=41074&#038;mp=110001">
+        資源回收分類方式</a></string>
+
+    <string name="yahoo"><a href="https://www.yahoo.com/news/weather/taiwan/taipei-city/taipei-city-55812231">
+        台北天氣資料來源</a></string>
+
+    <string name="direction">說明</string>
+    <string name="google_play_service_missing">裝置沒有安裝Google Play服務</string>
+    <string name="search">Search</string>
+    <string name="settings">設定</string>
+    <string name="search_title">輸入行政區查詢:</string>
+    <string name="search_hint">提示</string>
+    <string name="lng">經度:</string>
+    <string name="lat">緯度:</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="no_internet">網路尚未連線</string>
+    <string name="garbage_area">垃圾清運點</string>
+    <string name="title">標題</string>
+    <string name="content">內容</string>
+    <string name="btn_ok">確認</string>
+    <string name="btn_cancel">取消</string>
+    <string name="revert">還原</string>
+    <string name="delete">刪除</string>
+    <string name="delete_item">確定要刪除 %1$d 個項目？</string>
+    <string name="write_external_storage_denied">沒有寫入外部儲存設備授權</string>
+    <string name="distance">距離約為: </string>
+    <string name="meter"> 公尺</string>
+
+    <string-array name="area">
+        <item>中正區</item>
+        <item>大同區</item>
+        <item>中山區</item>
+        <item>松山區</item>
+        <item>大安區</item>
+        <item>萬華區</item>
+        <item>信義區</item>
+        <item>士林區</item>
+        <item>北投區</item>
+        <item>內湖區</item>
+        <item>南港區</item>
+        <item>文山區</item>
+    </string-array>
+
+    <string name="default_color">預設的顏色</string>
+    <string name="default_color_summary">新增記事的預設顏色</string>
+
+    <string name="default_notify">預設提醒時間</string>
+    <string name="default_notify_summary">在指定的時間之前通知</string>
+
+    <string-array name="notify_minutes_array">
+        <item>五分鐘</item>
+        <item>十分鐘</item>
+        <item>二十分鐘</item>
+        <item>三十分鐘</item>
+        <item>六十分鐘</item>
+    </string-array>
+
+    <string-array name="notify_minutes_value_array">
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="dirsearch">搜尋行政區方式:ex 內湖區東湖路..依序顯示地址 輸入查詢</string>
+    <string name="dirlocation">地圖定位-顯示垃圾車清運點位置</string>
+    <string name="dirdel">刪除記事資料:長壓記事資料列</string>
+    <string name="diredit">修改記事資料:點選記事資料列</string>
+    <string name="diralarm">記事資料可以自定提醒時間</string>
+    <string name="dirphoto">可以使用拍照來記錄記事</string>
+    <string name="dirtag">使用修改來設定標籤顏色</string>
+    <string name="diredittag">可從設定中指定新增記事資料的\n預設標籤顏色</string>
+    <string name="dirwidget">桌面小工具,可將記事資料新增到桌面上</string>
+
+    <string name="dark_theme">Dark Theme  &#160; </string>
+    <string name="pink_theme">Pink Theme  &#160; </string>
+    <string name="purple_theme">Purple Theme  &#160; </string>
+
+</resources>

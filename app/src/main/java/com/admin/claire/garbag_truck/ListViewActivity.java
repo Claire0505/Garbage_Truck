@@ -63,7 +63,7 @@ public class ListViewActivity extends AppCompatActivity {
     //臺北市垃圾清運點位資訊
     private final String TPETrashURL = "http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=aa9c657c-ea6f-4062-a645-b6c973d45564";
     private final String TPETrashURL1 = "https://www.dropbox.com/s/f3yb3rvny6pwrj8/opendata_trash.json?dl=1";
-    String TPE_GarbageTruckURL = "https://www.dropbox.com/s/sw3y44evwmywtzz/opendata_trash.txt?dl=1";
+    String TPE_GarbageTruckURL = "https://www.dropbox.com/s/frwxakmnd9xziax/opendata_trash20181012.txt?dl=1";
     ArrayList<HashMap<String, String>> garbagetrucklist;
 
     //private ListAdapter adapter;
@@ -116,13 +116,13 @@ public class ListViewActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //Log.e(TAG, "onResponse: " + response.toString() );
+                       // Log.d(TAG, "onResponse: " + response.toString() );
                         parserJson(response);
                         adapter = new SimpleAdapter(
                                 ListViewActivity.this,
                                 garbagetrucklist,
                                 R.layout.list_item_card,
-                                new String[]{"title","content","lng","lat"},
+                                new String[]{"Title","Content","Lng","Lat"},
                                 new int[]{R.id.title, R.id.content, R.id.lng, R.id.lat});
                         lv.setAdapter(adapter);
                         lv.setTextFilterEnabled(true);
@@ -181,20 +181,24 @@ public class ListViewActivity extends AppCompatActivity {
             for (int i = 0; i < data.length(); i++) {
                 JSONObject object = data.getJSONObject(i);
 
-                String id = object.getString("_id");
-                String title = object.getString("title");
-                String content = object.getString("content");
-                String lat = object.getString("lat");
-                String lng = object.getString("lng");
-                String modifydate = object.getString("modifydate");
+                String unit = object.getString("Unit");
+                String title = object.getString("Title");
+                String content = object.getString("Content");
+                String lat = object.getString("Lat");
+                String lng = object.getString("Lng");
+                String modifydate = object.getString("ModifyDate");
+                String diffgrid = object.getString("_diffgr:id");
+                String msdatarowOrder = object.getString("_msdata:rowOrder");
 
                 HashMap<String, String> garbagetruck = new HashMap<>();
-                garbagetruck.put("_id", id);
-                garbagetruck.put("title", title);
-                garbagetruck.put("content", content);
-                garbagetruck.put("lat", lat);
-                garbagetruck.put("lng", lng);
-                garbagetruck.put("modifydate", modifydate);
+                garbagetruck.put("Unit", unit);
+                garbagetruck.put("Title", title);
+                garbagetruck.put("Content", content);
+                garbagetruck.put("Lat", lat);
+                garbagetruck.put("Lng", lng);
+                garbagetruck.put("ModifyDate", modifydate);
+                garbagetruck.put("_diffgr:id", diffgrid);
+                garbagetruck.put("_msdata:rowOrder", msdatarowOrder);
 
                 garbagetrucklist.add(garbagetruck);
 
@@ -278,10 +282,10 @@ public class ListViewActivity extends AppCompatActivity {
 
             Intent intent = new Intent(ListViewActivity.this, Garbagetruck_List_Activity.class);
             //傳送資料
-            intent.putExtra("title", title);
-            intent.putExtra("content", content);
-            intent.putExtra("lng", lng);
-            intent.putExtra("lat", lat);
+            intent.putExtra("Title", title);
+            intent.putExtra("Content", content);
+            intent.putExtra("Lng", lng);
+            intent.putExtra("Lat", lat);
             startActivity(intent);
 
 //           Toast.makeText(MainActivity.this, "點選第 " + (position + 1)
